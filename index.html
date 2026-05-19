@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وزارة التربية العراقية - نتائج الامتحانات العامة التفصيلية</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary-bg: #f8f9fa;
+            --text-main: #0b1a30;
+            --text-muted: #6c757d;
+            --success-green: #28a745;
+            --success-bg: #e2f0d9;
+            --border-color: #e9ecef;
+            --primary-color: #1a4a3a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 430px; 
+            background-color: #ffffff;
+            min-height: 100vh;
+            box-sizing: border-box;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        .login-box {
+            padding-top: 60px;
+        }
+        .login-box h2 {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .error-text {
+            color: #dc3545;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .result-box {
+            display: none;
+        }
+
+        .ministry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+        }
+        
+        .header-text {
+            text-align: right;
+            line-height: 1.5;
+        }
+        .header-text h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #000000;
+            font-weight: bold;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        /* استدعاء وتنسيق الصورة الحقيقية التي حفظتها */
+        .real-logo-img {
+            width: 82px; 
+            height: 82px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .header-title-main {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 25px 0;
+            line-height: 1.6;
+            color: #0b1a30;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1.05rem;
+        }
+        .info-label {
+            color: var(--text-muted);
+            width: 35%;
+            font-size: 0.95rem;
+        }
+        .info-value {
+            color: #000000;
+            font-weight: bold;
+            width: 65%;
+            text-align: left;
+        }
+
+        .badge-status {
+            background-color: var(--success-bg);
+            color: var(--success-green);
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            display: inline-block;
+        }
+
+        .subjects-section {
+            margin-top: 25px;
+            background: #fdfdfd;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px 12px;
+        }
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: #0b1a30;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            text-align: right;
+        }
+        .subject-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 5px;
+            border-bottom: 1px dashed var(--border-color);
+            font-size: 1rem;
+        }
+        .subject-row:last-child {
+            border-bottom: none;
+        }
+        .subject-name {
+            color: #333333;
+        }
+        .subject-grade {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #000000;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+
+        .qr-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+        }
+        #qrcode {
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+
+        <div class="login-box" id="loginBox">
+            <h2>بوابة فحص النتائج الوزارية العامة</h2>
+            <div class="form-group">
+                <label>الرقم الامتحاني للطالب:</label>
+                <input type="text" id="examNumber" placeholder="أدخل رقمك الامتحاني المتكون من 10 أرقام">
+            </div>
+            <div class="form-group">
+                <label>الرمز السري الفريد للنتيجة:</label>
+                <input type="password" id="secretCode" placeholder="أدخل كود التحقق السري">
+            </div>
+            <button class="btn-primary" onclick="processLogin()">تسجيل الدخول وعرض النتيجة</button>
+            <div class="error-text" id="errorMsg">خطأ في النظام! يرجى التأكد من تطابق الرقم والرمز السري الخاص بالطالب.</div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+            
+            <div class="ministry-header">
+                <div class="header-text">
+                    <h3>جمهورية العراق</h3>
+                    <h3>وزارة التربية</h3>
+                </div>
+
+                <div class="logo-container">
+                    <img class="real-logo-img" src="logo.png" onerror="this.src='logo.jpg'" alt="وزارة التربية">
+                </div>
+            </div>
+
+            <div class="header-title-main">
+                اللجنة الدائمة للامتحانات<br>العامة لعام 2026/2025<br>الدور الأول
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">الاسم الرباعي</span>
+                <span class="info-value" id="studentName"></span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">اسم المدرسة</span>
+                <span class="info-value">اعدادية النخبة للبنين</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">المديرية</span>
+                <span class="info-value">كربلاء المقدسة</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">الفرع</span>
+                <span class="info-value">علمي</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">المجموع</span>
+                <span class="info-value" id="studentTotal"></span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">المعدل الإجمالي</span>
+                <span class="info-value" id="studentAverage"></span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">النتيجة النهائية</span>
+                <span class="info-value" style="text-align: left;">
+                    <span class="badge-status">ناجح</span>
+                </span>
+            </div>
+
+            <div class="subjects-section">
+                <div class="section-title">تفاصيل درجات المواد الدراسية:</div>
+                <div id="subjectsContainer"></div>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">
+                تسجيل الخروج ➔
+            </button>
+
+            <div class="qr-section">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">نظام التوثيق والتحقق الإلكتروني الصادر من مركز الفحص الرئيسي بالوزارة</div>
+                <div id="qrcode"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const db = {
+            examNumber: "1026910011",
+            secretCode: "J89M",
+            name: "جعفر الصادق محمد باقر مطلك",
+            total: "619", 
+            average: "89.42%", 
+            id: "ver_jaafar_89",
+            subjects: [
+                { name: "التربية الإسلامية", grade: 96 },
+                { name: "اللغة العربية", grade: 85 },
+                { name: "اللغة الإنكليزية", grade: 86 },
+                { name: "الأحياء", grade: 88 },
+                { name: "الرياضيات", grade: 91 },
+                { name: "الكيمياء", grade: 85 },
+                { name: "الفيزياء", grade: 88 }
+            ]
+        };
+
+        function processLogin() {
+            const num = document.getElementById('examNumber').value.trim();
+            const code = document.getElementById('secretCode').value.trim();
+            const error = document.getElementById('errorMsg');
+
+            if (num === db.examNumber && code === db.secretCode) {
+                error.style.display = 'none';
+                
+                document.getElementById('studentName').innerText = db.name;
+                document.getElementById('studentTotal').innerText = db.total;
+                document.getElementById('studentAverage').innerText = db.average;
+
+                let subjectsHTML = "";
+                db.subjects.forEach(sub => {
+                    subjectsHTML += `
+                        <div class="subject-row">
+                            <span class="subject-name">${sub.name}</span>
+                            <span class="subject-grade">${sub.grade}</span>
+                        </div>
+                    `;
+                });
+                document.getElementById('subjectsContainer').innerHTML = subjectsHTML;
+
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('resultBox').style.display = 'block';
+
+                const verifyURL = window.location.href.replace('result.html', '') + 'verify.html?id=' + db.id;
+                document.getElementById('qrcode').innerHTML = "";
+                new QRCode(document.getElementById("qrcode"), {
+                    text: verifyURL,
+                    width: 100,
+                    height: 100,
+                    colorDark : "#0b1a30",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.M
+                });
+            } else {
+                error.style.display = 'block';
+            }
+        }
+
+        function logout() {
+            document.getElementById('resultBox').style.display = 'none';
+            document.getElementById('loginBox').style.display = 'block';
+            document.getElementById('examNumber').value = "";
+            document.getElementById('secretCode').value = "";
+            document.getElementById('subjectsContainer').innerHTML = ""; 
+        }
+    </script>
+</body>
+</html>
