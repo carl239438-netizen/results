@@ -116,7 +116,6 @@
             justify-content: flex-end;
         }
         
-        /* استدعاء وتنسيق الصورة الحقيقية التي حفظتها */
         .real-logo-img {
             width: 82px; 
             height: 82px;
@@ -185,6 +184,7 @@
             padding: 12px 5px;
             border-bottom: 1px dashed var(--border-color);
             font-size: 1rem;
+            align-items: center;
         }
         .subject-row:last-child {
             border-bottom: none;
@@ -193,8 +193,11 @@
             color: #333333;
         }
         .subject-grade {
+            background-color: var(--success-bg);
+            color: var(--success-green);
+            padding: 5px 15px;
+            border-radius: 6px;
             font-weight: bold;
-            color: #000000;
         }
 
         .logout-btn {
@@ -318,20 +321,20 @@
 
     <script>
         const db = {
-            examNumber: "1026910011",
+            examNumber: "26140100037",
             secretCode: "J89M",
             name: "جعفر الصادق محمد باقر مطلك",
-            total: "619", 
-            average: "89.42%", 
+            total: "626", 
+            average: "90.43%", 
             id: "ver_jaafar_89",
             subjects: [
-                { name: "التربية الإسلامية", grade: 96 },
-                { name: "اللغة العربية", grade: 85 },
-                { name: "اللغة الإنكليزية", grade: 86 },
-                { name: "الأحياء", grade: 88 },
+                { name: "التربية الإسلامية", grade: 93 },
+                { name: "اللغة العربية", grade: 87 },
+                { name: "اللغة الإنكليزية", grade: 88 },
+                { name: "الأحياء", grade: 89 },
                 { name: "الرياضيات", grade: 91 },
-                { name: "الكيمياء", grade: 85 },
-                { name: "الفيزياء", grade: 88 }
+                { name: "الكيمياء", grade: 88 },
+                { name: "الفيزياء", grade: 90 }
             ]
         };
 
@@ -361,7 +364,7 @@
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('resultBox').style.display = 'block';
 
-                const verifyURL = window.location.href.replace('result.html', '') + 'verify.html?id=' + db.id;
+                const verifyURL = window.location.href.replace('index.html', '') + 'verify.html?id=' + db.id;
                 document.getElementById('qrcode').innerHTML = "";
                 new QRCode(document.getElementById("qrcode"), {
                     text: verifyURL,
@@ -384,5 +387,5 @@
             document.getElementById('subjectsContainer').innerHTML = ""; 
         }
     </script>
-</body>
+</body> 
 </html>
