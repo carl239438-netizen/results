@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البطاقة التعريفية للطالب</title>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .id-card {
+            background: #ffffff;
+            width: 340px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            text-align: center;
+            padding: 25px 20px 60px 20px;
+        }
+        .card-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .card-header p {
+            margin: 5px 0 0 0;
+            font-size: 12px;
+            opacity: 0.85;
+        }
+        .photo-container {
+            text-align: center;
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+        }
+        .photo-container img {
+            width: 105px;
+            height: 135px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 4px solid #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+            background: #f3f4f6;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #e5e7eb;
+            padding: 12px 0;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            color: #6b7280;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .value {
+            color: #1f2937;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .card-footer {
+            background: #f9fafb;
+            text-align: center;
+            padding: 12px;
+            font-size: 11px;
+            color: #9ca3af;
+            border-top: 1px solid #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="id-card">
+        <div class="card-header">
+            <h2>وزارة التربية العراقية</h2>
+            <p>البطاقة الإلكترونية الرسمية للطالب</p>
+        </div>
+        <div class="photo-container">
+            <img src="logo.png" alt="صورة الطالب">
+        </div>
+        <div class="card-body">
+            <div class="info-row">
+                <span class="label">الاسم الرباعي:</span>
+                <span class="value">جعفر الصادق محمد باقر مطلك</span>
+            </div>
+            <div class="info-row">
+                <span class="label">الفرع الدراسي:</span>
+                <span class="value">السادس العلمي</span>
+            </div>
+            <div class="info-row">
+                <span class="label">المدرسة:</span>
+                <span class="value">اعدادية النخبة</span>
+            </div>
+            <div class="info-row">
+                <span class="label">الرقم الامتحاني:</span>
+                <span class="value">26140100037</span>
+            </div>
+            <div class="info-row">
+                <span class="label">الرمز السري:</span>
+                <span class="value">J89M</span>
+            </div>
+        </div>
+        <div class="card-footer">
+            بطاقة رقمية مشفرة عبر رمز QR
+        </div>
+    </div>
+
+</body>
+</html>
