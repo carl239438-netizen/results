@@ -77,13 +77,11 @@
             font-size: 14px;
             font-weight: bold;
         }
-        .card-footer {
-            background: #f9fafb;
-            text-align: center;
-            padding: 12px;
-            font-size: 11px;
-            color: #9ca3af;
-            border-top: 1px solid #f3f4f6;
+        /* كود الحماية الجديد لمنع قلب التاريخ والارقام */
+        .date-fix {
+            direction: ltr !important;
+            unicode-bidi: bidi-override !important;
+            display: inline-block;
         }
     </style>
 </head>
@@ -120,7 +118,7 @@
             </div>
             <div class="info-row">
                 <span class="label">العام الدراسي:</span>
-                <span class="value">2026 - 2025</span>
+                <span class="value date-fix">2025 - 2026</span>
             </div>
         </div>
         <div class="card-footer">
