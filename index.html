@@ -63,6 +63,16 @@
             text-align: center;
             font-size: 1rem;
         }
+        /* تنسيق المعادلة الجديدة */
+        .math-box {
+            background: #eee;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.1rem;
+        }
         .btn-primary {
             width: 100%;
             background-color: var(--primary-color);
@@ -236,24 +246,25 @@
             <h2>بوابة فحص النتائج الوزارية العامة</h2>
             <div class="form-group">
                 <label>الرقم الامتحاني للطالب:</label>
-                <input type="text" id="examNumber" placeholder="أدخل رقمك الامتحاني المتكون من 10 أرقام">
+                <input type="text" id="examNumber" placeholder="أدخل رقمك الامتحاني">
             </div>
             <div class="form-group">
                 <label>الرمز السري الفريد للنتيجة:</label>
                 <input type="password" id="secretCode" placeholder="أدخل كود التحقق السري">
             </div>
+            <div class="math-box" id="mathEq"></div>
+            <input type="number" id="mathResult" placeholder="اكتب ناتج المعادلة هنا" style="width:100%; padding:14px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; text-align:center;">
+            
             <button class="btn-primary" onclick="processLogin()">تسجيل الدخول وعرض النتيجة</button>
-            <div class="error-text" id="errorMsg">خطأ في النظام! يرجى التأكد من تطابق الرقم والرمز السري الخاص بالطالب.</div>
+            <div class="error-text" id="errorMsg">خطأ! يرجى التأكد من الرقم والرمز السري وناتج المعادلة.</div>
         </div>
 
         <div class="result-box" id="resultBox">
-            
             <div class="ministry-header">
                 <div class="header-text">
                     <h3>جمهورية العراق</h3>
                     <h3>وزارة التربية</h3>
                 </div>
-
                 <div class="logo-container">
                     <img class="real-logo-img" src="logo.png" onerror="this.src='logo.jpg'" alt="وزارة التربية">
                 </div>
@@ -267,32 +278,26 @@
                 <span class="info-label">الاسم الرباعي</span>
                 <span class="info-value" id="studentName"></span>
             </div>
-
             <div class="info-row">
                 <span class="info-label">اسم المدرسة</span>
                 <span class="info-value">اعدادية النخبة للبنين</span>
             </div>
-
             <div class="info-row">
                 <span class="info-label">المديرية</span>
                 <span class="info-value">كربلاء المقدسة</span>
             </div>
-
             <div class="info-row">
                 <span class="info-label">الفرع</span>
                 <span class="info-value">علمي</span>
             </div>
-
             <div class="info-row">
                 <span class="info-label">المجموع</span>
                 <span class="info-value" id="studentTotal"></span>
             </div>
-
             <div class="info-row">
                 <span class="info-label">المعدل الإجمالي</span>
                 <span class="info-value" id="studentAverage"></span>
             </div>
-
             <div class="info-row">
                 <span class="info-label">النتيجة النهائية</span>
                 <span class="info-value" style="text-align: left;">
@@ -313,9 +318,7 @@
                 <div style="font-size: 0.8rem; color: var(--text-muted);">نظام التوثيق والتحقق الإلكتروني الصادر من مركز الفحص الرئيسي بالوزارة</div>
                 <div id="qrcode"></div>
             </div>
-
         </div>
-
     </div>
 
     <script>
@@ -337,12 +340,18 @@
             ]
         };
 
+        // توليد معادلة عشوائية
+        let n1 = Math.floor(Math.random() * 9) + 1;
+        let n2 = Math.floor(Math.random() * 9) + 1;
+        document.getElementById('mathEq').innerText = `${n1} + ${n2} = ?`;
+
         function processLogin() {
             const num = document.getElementById('examNumber').value.trim();
             const code = document.getElementById('secretCode').value.trim();
+            const mathRes = parseInt(document.getElementById('mathResult').value);
             const error = document.getElementById('errorMsg');
 
-            if (num === db.examNumber && code === db.secretCode) {
+            if (num === db.examNumber && code === db.secretCode && mathRes === (n1 + n2)) {
                 error.style.display = 'none';
                 
                 document.getElementById('studentName').innerText = db.name;
@@ -362,19 +371,14 @@
 
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('resultBox').style.display = 'block';
-document.getElementById('qrcode').innerHTML = '<img src="qr-code.svg" alt="Student QR Code" style="width: 150px; height: 150px; display: block; margin: 0 auto;">';
-                const verifyURL = window.location.href.replace('index.html', '') + 'verify.html?id=' + db.id;
+                document.getElementById('qrcode').innerHTML = '<img src="qr-code.svg" alt="Student QR Code" style="width: 150px; height: 150px; display: block; margin: 0 auto;">';
             } else {
                 error.style.display = 'block';
             }
         }
 
         function logout() {
-            document.getElementById('resultBox').style.display = 'none';
-            document.getElementById('loginBox').style.display = 'block';
-            document.getElementById('examNumber').value = "";
-            document.getElementById('secretCode').value = "";
-            document.getElementById('subjectsContainer').innerHTML = ""; 
+            location.reload(); // إعادة تحميل الصفحة لتصفير كل شيء
         }
     </script>
 </body> 
