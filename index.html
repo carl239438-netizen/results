@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وزارة التربية العراقية - نتيجة الامتحانات</title>
+    <title>وزارة التربية العراقية - بوابة النتائج</title>
     <style>
         :root {
             --primary-bg: #f8f9fa;
@@ -29,16 +29,46 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.05);
         }
 
-        /* --- واجهة تسجيل الدخول --- */
+        /* --- واجهة تسجيل الدخول الرسمية --- */
         .login-box {
-            padding-top: 60px;
+            padding-top: 30px;
         }
-        .login-box h2 {
+        
+        .login-header {
             text-align: center;
-            color: var(--primary-color);
-            font-size: 1.3rem;
             margin-bottom: 30px;
         }
+        
+        .login-header img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .login-header h2 {
+            margin: 0;
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .login-header h3 {
+            margin: 5px 0 15px 0;
+            color: #000;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .login-header p {
+            margin: 0;
+            color: #444;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -46,7 +76,8 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            color: #333;
         }
         .form-group input {
             width: 100%;
@@ -57,6 +88,28 @@
             text-align: center;
             font-size: 1rem;
         }
+        
+        /* تصميم الكابتشا (المعادلة الحسابية) */
+        .captcha-box {
+            background-color: #f0f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #d1d9e6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .captcha-equation {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            direction: ltr;
+        }
+
         .btn-primary {
             width: 100%;
             background-color: var(--primary-color);
@@ -68,13 +121,46 @@
             border-radius: 8px;
             cursor: pointer;
             margin-top: 10px;
+            transition: 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #123528;
         }
         .error-text {
             color: #dc3545;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin-top: 15px;
             display: none;
+            font-weight: bold;
+        }
+
+        /* --- شاشة الانتظار (Loading) --- */
+        .loading-box {
+            display: none;
+            text-align: center;
+            padding-top: 150px;
+        }
+        
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
 
         /* --- واجهة النتيجة المطابقة للصورة --- */
@@ -109,12 +195,12 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 15px;
-            border-bottom: 2px solid #000; /* الخط الأسود الفاصل */
+            border-bottom: 2px solid #000;
             padding-bottom: 15px;
         }
 
         .student-details {
-            color: #a33b3b; /* اللون العنابي لمعلومات الطالب */
+            color: #a33b3b;
             font-size: 0.95rem;
             line-height: 1.7;
         }
@@ -156,7 +242,7 @@
 
         /* --- قسم المجموع والمعدل --- */
         .summary-section {
-            text-align: right; /* تم التعديل لتكون على اليمين */
+            text-align: right; 
             color: #28a745; 
             font-size: 1.15rem;
             font-weight: bold;
@@ -195,19 +281,41 @@
 
     <div class="phone-container">
 
-        <!-- تسجيل الدخول مالتك الأصلي -->
+        <!-- واجهة تسجيل الدخول الرسمية -->
         <div class="login-box" id="loginBox">
-            <h2>بوابة فحص النتائج الوزارية العامة</h2>
+            <div class="login-header">
+                <img src="logo.png" onerror="this.src='logo.jpg'" alt="شعار جمهورية العراق">
+                <h2>جمهورية العراق</h2>
+                <h3>وزارة التربية</h3>
+                <p>اللجنة الدائمة للامتحانات العامة<br>بوابة الاستعلام عن النتائج - الدور الأول</p>
+            </div>
+
             <div class="form-group">
                 <label>الرقم الامتحاني للطالب:</label>
                 <input type="text" id="examNumber" placeholder="أدخل رقمك الامتحاني المتكون من 10 أرقام">
             </div>
             <div class="form-group">
-                <label>الرمز السري الفريد للنتيجة:</label>
+                <label>الرمز السري للنتيجة:</label>
                 <input type="password" id="secretCode" placeholder="أدخل كود التحقق السري">
             </div>
+            
+            <!-- مربع المعادلة الحسابية للتحقق -->
+            <div class="captcha-box">
+                <label style="color: #333; font-weight: bold; margin-bottom: 10px; display: block;">لأغراض أمنية، يرجى حل المعادلة التالية:</label>
+                <div class="captcha-equation">
+                    <span id="num1"></span> × <span id="num2"></span> = 
+                </div>
+                <input type="number" id="captchaInput" placeholder="أدخل الناتج هنا" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; text-align: center; font-size: 1.1rem; box-sizing: border-box;">
+            </div>
+
             <button class="btn-primary" onclick="processLogin()">تسجيل الدخول وعرض النتيجة</button>
-            <div class="error-text" id="errorMsg">خطأ في النظام! يرجى التأكد من تطابق الرقم والرمز السري الخاص بالطالب.</div>
+            <div class="error-text" id="errorMsg">البيانات غير صحيحة! يرجى التأكد من الرقم والرمز السري وناتج المعادلة.</div>
+        </div>
+
+        <!-- شاشة الانتظار 5 ثواني -->
+        <div class="loading-box" id="loadingBox">
+            <div class="loader"></div>
+            <div class="loading-text">يرجى الانتظار...<br>جاري التحقق من قاعدة البيانات وجلب النتيجة</div>
         </div>
 
         <!-- النتيجة -->
@@ -282,49 +390,87 @@
             ]
         };
 
+        // متغيرات المعادلة الحسابية
+        let correctAnswer = 0;
+
+        // دالة توليد المعادلة الحسابية بشكل عشوائي
+        function generateCaptcha() {
+            let n1 = Math.floor(Math.random() * 10) + 1; 
+            let n2 = Math.floor(Math.random() * 10) + 1; 
+            correctAnswer = n1 * n2;
+            document.getElementById('num1').innerText = n1;
+            document.getElementById('num2').innerText = n2;
+            document.getElementById('captchaInput').value = ""; // تفريغ الحقل القديم
+        }
+
+        // تشغيل المعادلة أول ما تفتح الصفحة
+        window.onload = function() {
+            generateCaptcha();
+        };
+
         function processLogin() {
             const num = document.getElementById('examNumber').value.trim();
             const code = document.getElementById('secretCode').value.trim();
+            
+            // قراءة الرقم اللي يكتبه المستخدم وإذا كان فارغاً نعتبره خطأ
+            const captchaInput = document.getElementById('captchaInput').value.trim();
+            const captchaUserAnswer = captchaInput === "" ? null : parseInt(captchaInput);
+            
             const error = document.getElementById('errorMsg');
 
-            if (num === db.examNumber && code === db.secretCode) {
+            // التحقق من الرقم، الرمز، والناتج الحسابي
+            if (num === db.examNumber && code === db.secretCode && captchaUserAnswer === correctAnswer) {
                 error.style.display = 'none';
                 
-                // جلب البيانات للواجهة
-                document.getElementById('displayExamNumber').innerText = db.examNumber;
-                document.getElementById('studentName').innerText = db.name;
-                document.getElementById('studentTotal').innerText = db.total;
-                document.getElementById('studentAverage').innerText = db.average;
-
-                // بناء الجدول
-                let subjectsHTML = "";
-                db.subjects.forEach(sub => {
-                    subjectsHTML += `
-                        <tr>
-                            <td>${sub.name}</td>
-                            <td>${sub.grade}</td>
-                        </tr>
-                    `;
-                });
-                document.getElementById('subjectsContainer').innerHTML = subjectsHTML;
-
+                // إخفاء واجهة الدخول وإظهار شاشة التحميل
                 document.getElementById('loginBox').style.display = 'none';
-                document.getElementById('resultBox').style.display = 'block';
-                
-                // الـ QR وكود التحقق مالتك
-                document.getElementById('qrcode').innerHTML = '<img src="qr-code.svg" alt="Student QR Code" style="width: 150px; height: 150px; display: block; margin: 0 auto;">';
-                const verifyURL = window.location.href.replace('index.html', '') + 'verify.html?id=' + db.id;
+                document.getElementById('loadingBox').style.display = 'block';
+
+                // تأخير لمدة 5 ثواني
+                setTimeout(() => {
+                    // جلب البيانات
+                    document.getElementById('displayExamNumber').innerText = db.examNumber;
+                    document.getElementById('studentName').innerText = db.name;
+                    document.getElementById('studentTotal').innerText = db.total;
+                    document.getElementById('studentAverage').innerText = db.average;
+
+                    // بناء الجدول
+                    let subjectsHTML = "";
+                    db.subjects.forEach(sub => {
+                        subjectsHTML += `
+                            <tr>
+                                <td>${sub.name}</td>
+                                <td>${sub.grade}</td>
+                            </tr>
+                        `;
+                    });
+                    document.getElementById('subjectsContainer').innerHTML = subjectsHTML;
+
+                    // الـ QR
+                    document.getElementById('qrcode').innerHTML = '<img src="qr-code.svg" alt="Student QR Code" style="width: 150px; height: 150px; display: block; margin: 0 auto;">';
+
+                    // إخفاء التحميل وإظهار النتيجة
+                    document.getElementById('loadingBox').style.display = 'none';
+                    document.getElementById('resultBox').style.display = 'block';
+
+                }, 5000); 
+
             } else {
+                // إذا أخطأ
                 error.style.display = 'block';
+                if (num === db.examNumber && code === db.secretCode && captchaUserAnswer !== correctAnswer) {
+                    error.innerText = "الناتج الحسابي غير صحيح! حاول مرة أخرى.";
+                } else {
+                    error.innerText = "البيانات غير صحيحة! يرجى التأكد من الرقم والرمز السري وناتج المعادلة.";
+                }
+                // تغيير المعادلة الحسابية كعقاب صغير
+                generateCaptcha();
             }
         }
 
         function logout() {
-            document.getElementById('resultBox').style.display = 'none';
-            document.getElementById('loginBox').style.display = 'block';
-            document.getElementById('examNumber').value = "";
-            document.getElementById('secretCode').value = "";
-            document.getElementById('subjectsContainer').innerHTML = ""; 
+            // إعادة تحميل الصفحة بالكامل عند تسجيل الخروج لضمان تصفير كل شيء
+            window.location.reload();
         }
     </script>
 </body> 
