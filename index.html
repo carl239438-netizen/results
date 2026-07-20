@@ -163,7 +163,7 @@
             font-weight: bold;
         }
 
-        /* --- واجهة النتيجة المطابقة للصورة --- */
+        /* --- واجهة النتيجة --- */
         .result-box {
             display: none;
         }
@@ -203,6 +203,24 @@
             color: #a33b3b;
             font-size: 0.95rem;
             line-height: 1.7;
+        }
+
+        /* --- تأثير التغويش (Blur Effect) --- */
+        .blurred {
+            filter: blur(5px);
+            user-select: none; /* يمنع نسخ النص وهو مغوش */
+            transition: filter 0.3s ease;
+            display: inline-block;
+        }
+        
+        .eye-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0 5px;
+            vertical-align: middle;
+            outline: none;
         }
 
         .stars {
@@ -329,9 +347,22 @@
 
             <div class="top-info-container">
                 <div class="student-details">
-                    <div>الرقم الامتحاني: <span id="displayExamNumber"></span></div>
+                    <!-- الرقم الامتحاني مع التغويش والعين -->
+                    <div>
+                        الرقم الامتحاني: 
+                        <span id="displayExamNumber" class="blurred"></span>
+                        <button class="eye-btn" onclick="toggleVisibility('displayExamNumber', this)">👁️</button>
+                    </div>
+                    
                     <div>اسم الطالب: <span id="studentName"></span></div>
-                    <div>المدرسة: اعدادية النخبة للبنين</div>
+                    
+                    <!-- المدرسة مع التغويش والعين -->
+                    <div>
+                        المدرسة: 
+                        <span id="displaySchool" class="blurred">اعدادية النخبة للبنين</span>
+                        <button class="eye-btn" onclick="toggleVisibility('displaySchool', this)">👁️</button>
+                    </div>
+                    
                     <div>الفرع: علمي</div>
                     <div>المحافظة: كربلاء المقدسة</div>
                 </div>
@@ -390,51 +421,54 @@
             ]
         };
 
-        // متغيرات المعادلة الحسابية
         let correctAnswer = 0;
 
-        // دالة توليد المعادلة الحسابية بشكل عشوائي
         function generateCaptcha() {
             let n1 = Math.floor(Math.random() * 10) + 1; 
             let n2 = Math.floor(Math.random() * 10) + 1; 
             correctAnswer = n1 * n2;
             document.getElementById('num1').innerText = n1;
             document.getElementById('num2').innerText = n2;
-            document.getElementById('captchaInput').value = ""; // تفريغ الحقل القديم
+            document.getElementById('captchaInput').value = ""; 
         }
 
-        // تشغيل المعادلة أول ما تفتح الصفحة
         window.onload = function() {
             generateCaptcha();
         };
+
+        // دالة إخفاء وإظهار النص المغوش (علامة العين)
+        function toggleVisibility(elementId, btnElement) {
+            const el = document.getElementById(elementId);
+            if (el.classList.contains('blurred')) {
+                el.classList.remove('blurred');
+                btnElement.innerText = '🙈'; // عين مغمضة عند الإظهار
+            } else {
+                el.classList.add('blurred');
+                btnElement.innerText = '👁️'; // عين مفتوحة عند الإخفاء
+            }
+        }
 
         function processLogin() {
             const num = document.getElementById('examNumber').value.trim();
             const code = document.getElementById('secretCode').value.trim();
             
-            // قراءة الرقم اللي يكتبه المستخدم وإذا كان فارغاً نعتبره خطأ
             const captchaInput = document.getElementById('captchaInput').value.trim();
             const captchaUserAnswer = captchaInput === "" ? null : parseInt(captchaInput);
             
             const error = document.getElementById('errorMsg');
 
-            // التحقق من الرقم، الرمز، والناتج الحسابي
             if (num === db.examNumber && code === db.secretCode && captchaUserAnswer === correctAnswer) {
                 error.style.display = 'none';
                 
-                // إخفاء واجهة الدخول وإظهار شاشة التحميل
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('loadingBox').style.display = 'block';
 
-                // تأخير لمدة 5 ثواني
                 setTimeout(() => {
-                    // جلب البيانات
                     document.getElementById('displayExamNumber').innerText = db.examNumber;
                     document.getElementById('studentName').innerText = db.name;
                     document.getElementById('studentTotal').innerText = db.total;
                     document.getElementById('studentAverage').innerText = db.average;
 
-                    // بناء الجدول
                     let subjectsHTML = "";
                     db.subjects.forEach(sub => {
                         subjectsHTML += `
@@ -446,30 +480,25 @@
                     });
                     document.getElementById('subjectsContainer').innerHTML = subjectsHTML;
 
-                    // الـ QR
                     document.getElementById('qrcode').innerHTML = '<img src="qr-code.svg" alt="Student QR Code" style="width: 150px; height: 150px; display: block; margin: 0 auto;">';
 
-                    // إخفاء التحميل وإظهار النتيجة
                     document.getElementById('loadingBox').style.display = 'none';
                     document.getElementById('resultBox').style.display = 'block';
 
                 }, 5000); 
 
             } else {
-                // إذا أخطأ
                 error.style.display = 'block';
                 if (num === db.examNumber && code === db.secretCode && captchaUserAnswer !== correctAnswer) {
                     error.innerText = "الناتج الحسابي غير صحيح! حاول مرة أخرى.";
                 } else {
                     error.innerText = "البيانات غير صحيحة! يرجى التأكد من الرقم والرمز السري وناتج المعادلة.";
                 }
-                // تغيير المعادلة الحسابية كعقاب صغير
                 generateCaptcha();
             }
         }
 
         function logout() {
-            // إعادة تحميل الصفحة بالكامل عند تسجيل الخروج لضمان تصفير كل شيء
             window.location.reload();
         }
     </script>
