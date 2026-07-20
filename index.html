@@ -3,15 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وزارة التربية العراقية - نتائج الامتحانات العامة التفصيلية</title>
+    <title>وزارة التربية العراقية - نتيجة الامتحانات</title>
     <style>
         :root {
             --primary-bg: #f8f9fa;
-            --text-main: #0b1a30;
-            --text-muted: #6c757d;
-            --success-green: #28a745;
-            --success-bg: #e2f0d9;
-            --border-color: #e9ecef;
             --primary-color: #1a4a3a;
         }
 
@@ -20,7 +15,6 @@
             background-color: var(--primary-bg);
             margin: 0;
             padding: 0;
-            color: var(--text-main);
             display: flex;
             justify-content: center;
         }
@@ -32,10 +26,10 @@
             min-height: 100vh;
             box-sizing: border-box;
             padding: 20px;
-            position: relative;
             box-shadow: 0 0 15px rgba(0,0,0,0.05);
         }
 
+        /* --- واجهة تسجيل الدخول --- */
         .login-box {
             padding-top: 60px;
         }
@@ -83,127 +77,100 @@
             display: none;
         }
 
+        /* --- واجهة النتيجة المطابقة للصورة --- */
         .result-box {
             display: none;
         }
-
-        .ministry-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-            width: 100%;
-        }
         
-        .header-text {
-            text-align: right;
-            line-height: 1.5;
-        }
-        .header-text h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            color: #000000;
-            font-weight: bold;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-        }
-        
-        .real-logo-img {
-            width: 82px; 
-            height: 82px;
-            object-fit: contain;
-            display: block;
-        }
-
-        .header-title-main {
+        .res-header {
             text-align: center;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin: 25px 0;
+            color: #000;
+            margin-bottom: 20px;
             line-height: 1.6;
-            color: #0b1a30;
+        }
+        .res-header h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        .res-header h4 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .res-header p {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: bold;
         }
 
-        .info-row {
+        .top-info-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 15px 5px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 1.05rem;
-        }
-        .info-label {
-            color: var(--text-muted);
-            width: 35%;
-            font-size: 0.95rem;
-        }
-        .info-value {
-            color: #000000;
-            font-weight: bold;
-            width: 65%;
-            text-align: left;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #000; /* الخط الأسود الفاصل */
+            padding-bottom: 15px;
         }
 
-        .badge-status {
-            background-color: var(--success-bg);
-            color: var(--success-green);
-            padding: 6px 18px;
-            border-radius: 6px;
-            font-weight: bold;
+        .student-details {
+            color: #a33b3b; /* اللون العنابي لمعلومات الطالب */
             font-size: 0.95rem;
-            display: inline-block;
+            line-height: 1.7;
         }
 
-        .subjects-section {
-            margin-top: 25px;
-            background: #fdfdfd;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 15px 12px;
+        .stars {
+            color: #ffd700;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
         }
-        .section-title {
-            font-size: 1.05rem;
+
+        /* --- تصميم الجدول --- */
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            border: 1px solid #777; 
+        }
+
+        .grades-table th, .grades-table td {
+            border: 1px solid #777;
+            padding: 8px 10px;
+            color: #000;
+        }
+
+        .grades-table th {
+            background-color: #f2f2f2;
             font-weight: bold;
-            color: #0b1a30;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 8px;
-            margin-bottom: 12px;
+        }
+
+        .grades-table th:first-child, .grades-table td:first-child {
             text-align: right;
+            width: 75%;
         }
-        .subject-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 5px;
-            border-bottom: 1px dashed var(--border-color);
-            font-size: 1rem;
-            align-items: center;
+
+        .grades-table th:last-child, .grades-table td:last-child {
+            text-align: center;
+            width: 25%;
         }
-        .subject-row:last-child {
-            border-bottom: none;
-        }
-        .subject-name {
-            color: #333333;
-        }
-        .subject-grade {
-            background-color: var(--success-bg);
-            color: var(--success-green);
-            padding: 5px 15px;
-            border-radius: 6px;
+
+        /* --- قسم المجموع والمعدل --- */
+        .summary-section {
+            text-align: left; /* تم التعديل لتكون على اليسار أسفل الدرجات */
+            color: #28a745; 
+            font-size: 1.15rem;
             font-weight: bold;
+            line-height: 1.7;
+        }
+
+        .summary-section span {
+            color: #28a745;
         }
 
         .logout-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
             width: 100%;
             background-color: transparent;
             border: 1px solid #ccc;
@@ -213,18 +180,14 @@
             font-weight: bold;
             color: #000000;
             cursor: pointer;
-            margin-top: 25px;
+            margin-top: 30px;
         }
 
         .qr-section {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 25px;
             padding-top: 20px;
             border-top: 1px dashed #ccc;
-        }
-        #qrcode {
-            display: inline-block;
-            margin-top: 10px;
         }
     </style>
 </head>
@@ -232,6 +195,7 @@
 
     <div class="phone-container">
 
+        <!-- تسجيل الدخول مالتك الأصلي -->
         <div class="login-box" id="loginBox">
             <h2>بوابة فحص النتائج الوزارية العامة</h2>
             <div class="form-group">
@@ -246,63 +210,44 @@
             <div class="error-text" id="errorMsg">خطأ في النظام! يرجى التأكد من تطابق الرقم والرمز السري الخاص بالطالب.</div>
         </div>
 
+        <!-- النتيجة -->
         <div class="result-box" id="resultBox">
             
-            <div class="ministry-header">
-                <div class="header-text">
-                    <h3>جمهورية العراق</h3>
-                    <h3>وزارة التربية</h3>
+            <div class="res-header">
+                <h3>وزارة التربية</h3>
+                <h4>المديرية العامة للتربية في محافظة كربلاء المقدسة</h4>
+                <p>نتيجة الدور الاول 2025 - 2026</p>
+            </div>
+
+            <div class="top-info-container">
+                <div class="student-details">
+                    <div>الرقم الامتحاني: <span id="displayExamNumber"></span></div>
+                    <div>اسم الطالب: <span id="studentName"></span></div>
+                    <div>المدرسة: اعدادية النخبة للبنين</div>
+                    <div>الفرع: علمي</div>
+                    <div>المحافظة: كربلاء المقدسة</div>
                 </div>
-
-                <div class="logo-container">
-                    <img class="real-logo-img" src="logo.png" onerror="this.src='logo.jpg'" alt="وزارة التربية">
+                <div class="stars">
+                    ★★★★★
                 </div>
             </div>
 
-            <div class="header-title-main">
-                اللجنة الدائمة للامتحانات<br>العامة لعام 2026/2025<br>الدور الأول
-            </div>
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th>المادة</th>
+                        <th>الدرجة</th>
+                    </tr>
+                </thead>
+                <tbody id="subjectsContainer">
+                    <!-- سيتم إضافة المواد هنا -->
+                </tbody>
+            </table>
 
-            <div class="info-row">
-                <span class="info-label">الاسم الرباعي</span>
-                <span class="info-value" id="studentName"></span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">اسم المدرسة</span>
-                <span class="info-value">اعدادية النخبة للبنين</span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">المديرية</span>
-                <span class="info-value">كربلاء المقدسة</span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">الفرع</span>
-                <span class="info-value">علمي</span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">المجموع</span>
-                <span class="info-value" id="studentTotal"></span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">المعدل الإجمالي</span>
-                <span class="info-value" id="studentAverage"></span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">النتيجة النهائية</span>
-                <span class="info-value" style="text-align: left;">
-                    <span class="badge-status">ناجح</span>
-                </span>
-            </div>
-
-            <div class="subjects-section">
-                <div class="section-title">تفاصيل درجات المواد الدراسية:</div>
-                <div id="subjectsContainer"></div>
+            <div class="summary-section">
+                <div>المجموع : <span id="studentTotal"></span></div>
+                <div>المعدل : <span id="studentAverage"></span></div>
+                <div>النتيجة : ناجح</div>
             </div>
 
             <button class="logout-btn" onclick="logout()">
@@ -310,7 +255,7 @@
             </button>
 
             <div class="qr-section">
-                <div style="font-size: 0.8rem; color: var(--text-muted);">نظام التوثيق والتحقق الإلكتروني الصادر من مركز الفحص الرئيسي بالوزارة</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom:10px;">نظام التوثيق والتحقق الإلكتروني الصادر من مركز الفحص الرئيسي بالوزارة</div>
                 <div id="qrcode"></div>
             </div>
 
@@ -324,14 +269,14 @@
             secretCode: "6475839208",
             name: "جعفر الصادق محمد باقر مطلك",
             total: "640", 
-            average: "92.43%", 
+            average: "92.43", 
             id: "ver_jaafar_89",
             subjects: [
                 { name: "التربية الإسلامية", grade: 95 },
                 { name: "اللغة العربية", grade: 89 },
                 { name: "اللغة الإنكليزية", grade: 90 },
-                { name: "الأحياء", grade: 91 },
                 { name: "الرياضيات", grade: 93 },
+                { name: "الأحياء", grade: 91 },
                 { name: "الكيمياء", grade: 90 },
                 { name: "الفيزياء", grade: 92 }
             ]
@@ -345,24 +290,29 @@
             if (num === db.examNumber && code === db.secretCode) {
                 error.style.display = 'none';
                 
+                // جلب البيانات للواجهة
+                document.getElementById('displayExamNumber').innerText = db.examNumber;
                 document.getElementById('studentName').innerText = db.name;
                 document.getElementById('studentTotal').innerText = db.total;
                 document.getElementById('studentAverage').innerText = db.average;
 
+                // بناء الجدول
                 let subjectsHTML = "";
                 db.subjects.forEach(sub => {
                     subjectsHTML += `
-                        <div class="subject-row">
-                            <span class="subject-name">${sub.name}</span>
-                            <span class="subject-grade">${sub.grade}</span>
-                        </div>
+                        <tr>
+                            <td>${sub.name}</td>
+                            <td>${sub.grade}</td>
+                        </tr>
                     `;
                 });
                 document.getElementById('subjectsContainer').innerHTML = subjectsHTML;
 
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('resultBox').style.display = 'block';
-document.getElementById('qrcode').innerHTML = '<img src="qr-code.svg" alt="Student QR Code" style="width: 150px; height: 150px; display: block; margin: 0 auto;">';
+                
+                // الـ QR وكود التحقق مالتك
+                document.getElementById('qrcode').innerHTML = '<img src="qr-code.svg" alt="Student QR Code" style="width: 150px; height: 150px; display: block; margin: 0 auto;">';
                 const verifyURL = window.location.href.replace('index.html', '') + 'verify.html?id=' + db.id;
             } else {
                 error.style.display = 'block';
