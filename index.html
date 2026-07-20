@@ -205,10 +205,10 @@
             line-height: 1.7;
         }
 
-        /* --- تأثير التغويش (Blur Effect) --- */
+        /* --- تأثير التغويش والزر الرسمي --- */
         .blurred {
             filter: blur(5px);
-            user-select: none; /* يمنع نسخ النص وهو مغوش */
+            user-select: none;
             transition: filter 0.3s ease;
             display: inline-block;
         }
@@ -217,10 +217,18 @@
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 0.85rem;
+            color: #0056b3; /* لون أزرق كلاسيكي للروابط */
+            text-decoration: underline;
             padding: 0 5px;
             vertical-align: middle;
+            font-family: inherit;
+            font-weight: bold;
             outline: none;
+        }
+
+        .eye-btn:hover {
+            color: #003d82; /* لون أغمق عند التأشير */
         }
 
         .stars {
@@ -347,20 +355,20 @@
 
             <div class="top-info-container">
                 <div class="student-details">
-                    <!-- الرقم الامتحاني مع التغويش والعين -->
+                    <!-- الرقم الامتحاني مع زر الإظهار الرسمي -->
                     <div>
                         الرقم الامتحاني: 
                         <span id="displayExamNumber" class="blurred"></span>
-                        <button class="eye-btn" onclick="toggleVisibility('displayExamNumber', this)">👁️</button>
+                        <button class="eye-btn" onclick="toggleVisibility('displayExamNumber', this)">إظهار</button>
                     </div>
                     
                     <div>اسم الطالب: <span id="studentName"></span></div>
                     
-                    <!-- المدرسة مع التغويش والعين -->
+                    <!-- المدرسة مع زر الإظهار الرسمي -->
                     <div>
                         المدرسة: 
                         <span id="displaySchool" class="blurred">اعدادية النخبة للبنين</span>
-                        <button class="eye-btn" onclick="toggleVisibility('displaySchool', this)">👁️</button>
+                        <button class="eye-btn" onclick="toggleVisibility('displaySchool', this)">إظهار</button>
                     </div>
                     
                     <div>الفرع: علمي</div>
@@ -436,15 +444,15 @@
             generateCaptcha();
         };
 
-        // دالة إخفاء وإظهار النص المغوش (علامة العين)
+        // دالة إخفاء وإظهار النص الرسمي
         function toggleVisibility(elementId, btnElement) {
             const el = document.getElementById(elementId);
             if (el.classList.contains('blurred')) {
                 el.classList.remove('blurred');
-                btnElement.innerText = '🙈'; // عين مغمضة عند الإظهار
+                btnElement.innerText = 'إخفاء'; 
             } else {
                 el.classList.add('blurred');
-                btnElement.innerText = '👁️'; // عين مفتوحة عند الإخفاء
+                btnElement.innerText = 'إظهار'; 
             }
         }
 
