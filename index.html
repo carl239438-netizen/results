@@ -53,7 +53,7 @@
         }
 
         .logo {
-            width: 90px;
+            width: 85px;
             height: auto;
             margin-bottom: 15px;
             filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
@@ -113,7 +113,7 @@
             box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.1);
         }
         
-        /* الكابتشا (تم التعديل هنا لضمان الاستقامة) */
+        /* الكابتشا */
         .captcha-box {
             background-color: #fafafa;
             padding: 20px;
@@ -134,15 +134,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px; /* مسافة متساوية بين الأرقام */
+            gap: 15px; 
             font-size: 2.2rem;
             font-weight: 900;
             color: var(--primary);
             margin-bottom: 20px;
-            direction: ltr; /* الترتيب حصراً من اليسار لليمين */
+            direction: ltr; 
         }
         .captcha-box input {
-            width: 70%; /* تصغير الحقل ليكون أرتب */
+            width: 70%; 
             margin: 0 auto;
             display: block;
             padding: 14px;
@@ -224,6 +224,7 @@
         }
         .result-header-logo img {
             width: 65px;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
         }
         .result-header-logo h3 {
             margin: 10px 0 0 0;
@@ -343,10 +344,9 @@
         <!-- واجهة تسجيل الدخول -->
         <div class="login-box" id="loginBox">
             <div class="login-header">
-                <!-- تم وضع رابط أساسي للشعار مع رابط بديل (onerror) لضمان عدم ظهور الشعار المكسور -->
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Emblem_of_Iraq.svg" 
-                     onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/8074/8074800.png';" 
-                     alt="شعار جمهورية العراق" class="logo">
+                <!-- تم وضع الرابط الرسمي والمستقر لشعار جمهورية العراق -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Emblem_of_Iraq.svg/200px-Emblem_of_Iraq.svg.png" alt="شعار جمهورية العراق" class="logo">
+                
                 <div class="ministry-title">جمهورية العراق</div>
                 <div class="ministry-sub">وزارة التربية - اللجنة الدائمة للامتحانات</div>
                 <p>بوابة الاستعلام الإلكتروني للنتائج</p>
@@ -364,7 +364,6 @@
                 
                 <div class="captcha-box">
                     <div class="captcha-title">التحقق الأمني - حل المعادلة التالية:</div>
-                    <!-- تم التعديل هنا لتكون المعادلة مسطرة تماماً -->
                     <div class="captcha-equation">
                         <span id="num1"></span> 
                         <span>×</span> 
@@ -390,10 +389,7 @@
         <div class="result-box" id="resultBox">
             
             <div class="result-header-logo">
-                <!-- شعار النتيجة أيضاً تم دعمه برابط بديل -->
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Emblem_of_Iraq.svg" 
-                     onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/8074/8074800.png';" 
-                     alt="شعار التربية">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Emblem_of_Iraq.svg/200px-Emblem_of_Iraq.svg.png" alt="شعار جمهورية العراق">
                 <h3>وزارة التربية العراقية</h3>
             </div>
 
