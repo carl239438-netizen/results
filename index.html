@@ -233,10 +233,10 @@
         }
 
         .section-title {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-weight: 800;
-            margin: 25px 0 10px 5px;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin: 25px 0 12px 5px;
             display: flex;
             align-items: center;
         }
@@ -344,7 +344,7 @@
         <!-- واجهة تسجيل الدخول -->
         <div class="login-box" id="loginBox">
             <div class="login-header">
-                <!-- الصورة هسه تنسحب من ملفاتك مباشرة -->
+                <!-- الصورة تنسحب من ملفاتك مباشرة -->
                 <img src="logo.png" alt="شعار جمهورية العراق" class="logo">
                 
                 <div class="ministry-title">جمهورية العراق</div>
@@ -389,12 +389,11 @@
         <div class="result-box" id="resultBox">
             
             <div class="result-header-logo">
-                <!-- الصورة هنا هم تنسحب من ملفاتك -->
                 <img src="logo.png" alt="شعار جمهورية العراق">
                 <h3>وزارة التربية العراقية</h3>
             </div>
 
-            <h4 class="section-title">معلومات الطالب</h4>
+            <h4 class="section-title" style="color: var(--text-muted); font-size: 0.95rem; font-weight: 800;">معلومات الطالب</h4>
             <div class="app-card">
                 <div class="modern-row">
                     <span class="modern-label">الاسم</span>
@@ -420,7 +419,7 @@
                 </div>
             </div>
 
-            <h4 class="section-title">الخلاصة والنتيجة</h4>
+            <h4 class="section-title" style="color: var(--text-muted); font-size: 0.95rem; font-weight: 800;">الخلاصة والنتيجة</h4>
             <div class="app-card">
                 <div class="modern-row">
                     <span class="modern-label">الفرع</span>
@@ -440,9 +439,10 @@
                 </div>
             </div>
 
-            <h4 class="section-title">تفاصيل الدرجات</h4>
+            <!-- التعديل الجديد لقسم معلومات النتيجة والمواد -->
+            <h4 class="section-title" style="color: var(--text-main); font-size: 1.15rem; font-weight: 900;">معلومات النتيجة</h4>
             <div class="app-card" id="subjectsContainer">
-                <!-- سيتم تعبئة المواد هنا برمجياً -->
+                <!-- سيتم تعبئة المواد والعناوين هنا برمجياً -->
             </div>
 
             <button class="logout-btn" onclick="logout()">خروج وعودة للبحث</button>
@@ -514,11 +514,17 @@
                     
                     document.getElementById('studentAverage').innerText = "% " + db.average;
 
-                    let subjectsHTML = "";
+                    // إضافة العناوين (المادة - الدرجة) وتعبئة الدرجات
+                    let subjectsHTML = `
+                        <div class="modern-row" style="border-bottom: 2px solid #ddd; padding-bottom: 12px; margin-bottom: 5px; margin-top: 5px;">
+                            <span style="color: #111; font-weight: 900; font-size: 1.15rem;">المادة</span>
+                            <span style="color: #111; font-weight: 900; font-size: 1.15rem;">الدرجة</span>
+                        </div>
+                    `;
                     db.subjects.forEach(sub => {
                         subjectsHTML += `
                             <div class="modern-row">
-                                <span class="modern-label">${sub.name}</span>
+                                <span class="modern-label" style="font-weight: bold; color: #333;">${sub.name}</span>
                                 <span class="modern-value">${sub.grade}</span>
                             </div>
                         `;
