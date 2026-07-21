@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وزارة التربية العراقية - بوابة النتائج</title>
+    <title>بوابة النتائج - النظام الحديث</title>
     <style>
         :root {
-            --primary-bg: #f8f9fa;
-            --primary-color: #1a4a3a;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --border-color: #eeeeee;
+            --primary: #1a4a3a;
+            --success-bg: #e6f8f0;
+            --success-text: #147a4c;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--primary-bg);
+            background-color: var(--bg-color);
             margin: 0;
             padding: 0;
             display: flex;
@@ -22,51 +28,36 @@
         .phone-container {
             width: 100%;
             max-width: 430px; 
-            background-color: #ffffff;
+            background-color: var(--bg-color);
             min-height: 100vh;
             box-sizing: border-box;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
         }
 
-        /* --- واجهة تسجيل الدخول الرسمية --- */
+        /* --- واجهة تسجيل الدخول --- */
         .login-box {
-            padding-top: 30px;
+            padding: 40px 20px;
+            background-color: var(--card-bg);
+            min-height: 100vh;
+            box-sizing: border-box;
         }
         
         .login-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
-        .login-header img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            margin-bottom: 15px;
-        }
-
         .login-header h2 {
             margin: 0;
-            color: #000;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .login-header h3 {
-            margin: 5px 0 15px 0;
-            color: #000;
-            font-size: 1.3rem;
+            color: var(--text-main);
+            font-size: 1.6rem;
             font-weight: bold;
         }
 
         .login-header p {
-            margin: 0;
-            color: #444;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-top: 1px solid #ccc;
-            padding-top: 10px;
+            margin: 5px 0 0 0;
+            color: var(--text-muted);
+            font-size: 1rem;
         }
 
         .form-group {
@@ -77,229 +68,182 @@
             margin-bottom: 8px;
             font-weight: 600;
             font-size: 0.95rem;
-            color: #333;
+            color: var(--text-main);
         }
         .form-group input {
             width: 100%;
-            padding: 14px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
             box-sizing: border-box;
             text-align: center;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            background-color: #fafafa;
+            outline: none;
+            transition: 0.3s;
+        }
+        .form-group input:focus {
+            border-color: var(--primary);
+            background-color: #fff;
         }
         
-        /* تصميم الكابتشا (المعادلة الحسابية) */
+        /* الكابتشا */
         .captcha-box {
-            background-color: #f0f4f8;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #d1d9e6;
-            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            margin-bottom: 25px;
             text-align: center;
         }
         .captcha-equation {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
+            color: var(--primary);
+            margin-bottom: 15px;
             direction: ltr;
         }
 
         .btn-primary {
             width: 100%;
-            background-color: var(--primary-color);
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 16px;
             font-size: 1.1rem;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            margin-top: 10px;
             transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(26, 74, 58, 0.2);
         }
         .btn-primary:hover {
             background-color: #123528;
         }
         .error-text {
-            color: #dc3545;
+            color: #d32f2f;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-top: 15px;
             display: none;
             font-weight: bold;
         }
 
-        /* --- شاشة الانتظار (Loading) --- */
+        /* --- شاشة التحميل --- */
         .loading-box {
             display: none;
             text-align: center;
-            padding-top: 150px;
+            padding-top: 200px;
+            height: 100vh;
+            background-color: var(--card-bg);
+            box-sizing: border-box;
         }
-        
         .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary-color);
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px auto;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        .loading-text {
-            color: #333;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        /* --- واجهة النتيجة --- */
+        /* --- واجهة النتيجة الحديثة (Mobile App Style) --- */
         .result-box {
             display: none;
+            padding: 20px;
+            padding-bottom: 40px;
+        }
+
+        .section-title {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin: 25px 0 10px 5px;
+        }
+
+        .app-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .modern-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border-color);
         }
         
-        .res-header {
-            text-align: center;
-            color: #000;
-            margin-bottom: 20px;
-            line-height: 1.6;
+        .modern-row:last-child {
+            border-bottom: none;
         }
-        .res-header h3 {
-            margin: 0;
-            font-size: 1.4rem;
-            font-weight: bold;
+
+        .modern-label {
+            color: var(--text-main);
+            font-size: 1.05rem;
+            font-weight: 600;
         }
-        .res-header h4 {
-            margin: 0;
+
+        .modern-value {
+            color: var(--text-main);
             font-size: 1.1rem;
             font-weight: bold;
         }
-        .res-header p {
-            margin: 0;
-            font-size: 1.05rem;
+
+        .badge-success {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            padding: 6px 18px;
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: bold;
         }
 
-        .top-info-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #000;
-            padding-bottom: 15px;
-        }
-
-        .student-details {
-            color: #a33b3b;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        /* --- تأثير التغويش والزر الرسمي --- */
+        /* التغويش */
         .blurred {
             filter: blur(5px);
             user-select: none;
             transition: filter 0.3s ease;
-            display: inline-block;
         }
-        
         .eye-btn {
             background: none;
             border: none;
             cursor: pointer;
             font-size: 0.85rem;
-            color: #0056b3; /* لون أزرق كلاسيكي للروابط */
+            color: #0056b3;
             text-decoration: underline;
-            padding: 0 5px;
-            vertical-align: middle;
+            padding: 0 8px;
             font-family: inherit;
             font-weight: bold;
             outline: none;
         }
 
-        .eye-btn:hover {
-            color: #003d82; /* لون أغمق عند التأشير */
-        }
-
-        .stars {
-            color: #ffd700;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
-        }
-
-        /* --- تصميم الجدول --- */
-        .grades-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
-            border: 1px solid #777; 
-        }
-
-        .grades-table th, .grades-table td {
-            border: 1px solid #777;
-            padding: 8px 10px;
-            color: #000;
-        }
-
-        .grades-table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        .grades-table th:first-child, .grades-table td:first-child {
-            text-align: right;
-            width: 75%;
-        }
-
-        .grades-table th:last-child, .grades-table td:last-child {
-            text-align: center;
-            width: 25%;
-        }
-
-        /* --- قسم المجموع والمعدل --- */
-        .summary-section {
-            text-align: right; 
-            color: #28a745; 
-            font-size: 1.15rem;
-            font-weight: bold;
-            line-height: 1.7;
-        }
-
-        .summary-section span {
-            color: #28a745;
+        .val-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .logout-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
             width: 100%;
             background-color: transparent;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 1.05rem;
             font-weight: bold;
-            color: #000000;
+            color: var(--text-main);
             cursor: pointer;
             margin-top: 30px;
-        }
-
-        .qr-section {
             text-align: center;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px dashed #ccc;
         }
     </style>
 </head>
@@ -307,104 +251,95 @@
 
     <div class="phone-container">
 
-        <!-- واجهة تسجيل الدخول الرسمية -->
+        <!-- واجهة تسجيل الدخول -->
         <div class="login-box" id="loginBox">
             <div class="login-header">
-                <img src="logo.png" onerror="this.src='logo.jpg'" alt="شعار جمهورية العراق">
-                <h2>جمهورية العراق</h2>
-                <h3>وزارة التربية</h3>
-                <p>اللجنة الدائمة للامتحانات العامة<br>بوابة الاستعلام عن النتائج - الدور الأول</p>
+                <h2>بوابة الاستعلام الإلكتروني</h2>
+                <p>يرجى إدخال بياناتك لعرض النتيجة</p>
             </div>
 
             <div class="form-group">
-                <label>الرقم الامتحاني للطالب:</label>
-                <input type="text" id="examNumber" placeholder="أدخل رقمك الامتحاني المتكون من 10 أرقام">
+                <label>الرقم الامتحاني</label>
+                <input type="text" id="examNumber" placeholder="أدخل الرقم المكون من 10 أرقام">
             </div>
             <div class="form-group">
-                <label>الرمز السري للنتيجة:</label>
-                <input type="password" id="secretCode" placeholder="أدخل كود التحقق السري">
+                <label>الرمز السري</label>
+                <input type="password" id="secretCode" placeholder="أدخل الرمز السري">
             </div>
             
-            <!-- مربع المعادلة الحسابية للتحقق -->
             <div class="captcha-box">
-                <label style="color: #333; font-weight: bold; margin-bottom: 10px; display: block;">لأغراض أمنية، يرجى حل المعادلة التالية:</label>
+                <label style="color: #555; margin-bottom: 10px; display: block; font-size: 0.9rem;">لأغراض أمنية، حل المعادلة:</label>
                 <div class="captcha-equation">
                     <span id="num1"></span> × <span id="num2"></span> = 
                 </div>
-                <input type="number" id="captchaInput" placeholder="أدخل الناتج هنا" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; text-align: center; font-size: 1.1rem; box-sizing: border-box;">
+                <input type="number" id="captchaInput" placeholder="الناتج" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; text-align: center; font-size: 1.1rem; box-sizing: border-box;">
             </div>
 
-            <button class="btn-primary" onclick="processLogin()">تسجيل الدخول وعرض النتيجة</button>
-            <div class="error-text" id="errorMsg">البيانات غير صحيحة! يرجى التأكد من الرقم والرمز السري وناتج المعادلة.</div>
+            <button class="btn-primary" onclick="processLogin()">تسجيل الدخول</button>
+            <div class="error-text" id="errorMsg">البيانات غير صحيحة! يرجى التأكد والمحاولة مجدداً.</div>
         </div>
 
-        <!-- شاشة الانتظار 5 ثواني -->
+        <!-- شاشة التحميل -->
         <div class="loading-box" id="loadingBox">
             <div class="loader"></div>
-            <div class="loading-text">يرجى الانتظار...<br>جاري التحقق من قاعدة البيانات وجلب النتيجة</div>
+            <div style="color: #555; font-weight: bold; font-size: 1.1rem;">جاري جلب البيانات...</div>
         </div>
 
-        <!-- النتيجة -->
+        <!-- واجهة النتيجة (التصميم الحديث) -->
         <div class="result-box" id="resultBox">
             
-            <div class="res-header">
-                <h3>وزارة التربية</h3>
-                <h4>المديرية العامة للتربية في محافظة كربلاء المقدسة</h4>
-                <p>نتيجة الدور الاول 2025 - 2026</p>
-            </div>
-
-            <div class="top-info-container">
-                <div class="student-details">
-                    <!-- الرقم الامتحاني مع زر الإظهار الرسمي -->
-                    <div>
-                        الرقم الامتحاني: 
-                        <span id="displayExamNumber" class="blurred"></span>
+            <h4 class="section-title">معلومات الطالب</h4>
+            <div class="app-card">
+                <div class="modern-row">
+                    <span class="modern-label">الاسم</span>
+                    <span class="modern-value" id="studentName"></span>
+                </div>
+                <div class="modern-row">
+                    <span class="modern-label">الرقم الامتحاني</span>
+                    <div class="val-container">
                         <button class="eye-btn" onclick="toggleVisibility('displayExamNumber', this)">إظهار</button>
+                        <span class="modern-value blurred" id="displayExamNumber"></span>
                     </div>
-                    
-                    <div>اسم الطالب: <span id="studentName"></span></div>
-                    
-                    <!-- المدرسة مع زر الإظهار الرسمي -->
-                    <div>
-                        المدرسة: 
-                        <span id="displaySchool" class="blurred">اعدادية النخبة للبنين</span>
+                </div>
+                <div class="modern-row">
+                    <span class="modern-label">المدرسة</span>
+                    <div class="val-container">
                         <button class="eye-btn" onclick="toggleVisibility('displaySchool', this)">إظهار</button>
+                        <span class="modern-value blurred" id="displaySchool">اعدادية النخبة للبنين</span>
                     </div>
-                    
-                    <div>الفرع: علمي</div>
-                    <div>المحافظة: كربلاء المقدسة</div>
                 </div>
-                <div class="stars">
-                    ★★★★★
+                <div class="modern-row">
+                    <span class="modern-label">المحافظة</span>
+                    <span class="modern-value">كربلاء المقدسة</span>
                 </div>
             </div>
 
-            <table class="grades-table">
-                <thead>
-                    <tr>
-                        <th>المادة</th>
-                        <th>الدرجة</th>
-                    </tr>
-                </thead>
-                <tbody id="subjectsContainer">
-                    <!-- سيتم إضافة المواد هنا -->
-                </tbody>
-            </table>
-
-            <div class="summary-section">
-                <div>المجموع : <span id="studentTotal"></span></div>
-                <div>المعدل : <span id="studentAverage"></span></div>
-                <div>النتيجة : ناجح</div>
+            <h4 class="section-title">الدرجات</h4>
+            <div class="app-card" id="subjectsContainer">
+                <!-- سيتم إضافة المواد هنا برمجياً -->
             </div>
 
-            <button class="logout-btn" onclick="logout()">
-                تسجيل الخروج ➔
-            </button>
-
-            <div class="qr-section">
-                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom:10px;">نظام التوثيق والتحقق الإلكتروني الصادر من مركز الفحص الرئيسي بالوزارة</div>
-                <div id="qrcode"></div>
+            <h4 class="section-title">الخلاصة</h4>
+            <div class="app-card">
+                <div class="modern-row">
+                    <span class="modern-label">الفرع</span>
+                    <span class="modern-value">علمي</span>
+                </div>
+                <div class="modern-row">
+                    <span class="modern-label">المجموع</span>
+                    <span class="modern-value" id="studentTotal"></span>
+                </div>
+                <div class="modern-row">
+                    <span class="modern-label">المعدل</span>
+                    <span class="modern-value" id="studentAverage" style="direction: ltr;"></span>
+                </div>
+                <div class="modern-row">
+                    <span class="modern-label">النتيجة النهائية</span>
+                    <span class="badge-success">ناجح</span>
+                </div>
             </div>
+
+            <button class="logout-btn" onclick="logout()">عودة للصفحة الرئيسية</button>
 
         </div>
 
@@ -417,7 +352,6 @@
             name: "جعفر الصادق محمد باقر مطلك",
             total: "640", 
             average: "92.43", 
-            id: "ver_jaafar_89",
             subjects: [
                 { name: "التربية الإسلامية", grade: 95 },
                 { name: "اللغة العربية", grade: 89 },
@@ -444,7 +378,6 @@
             generateCaptcha();
         };
 
-        // دالة إخفاء وإظهار النص الرسمي
         function toggleVisibility(elementId, btnElement) {
             const el = document.getElementById(elementId);
             if (el.classList.contains('blurred')) {
@@ -459,15 +392,12 @@
         function processLogin() {
             const num = document.getElementById('examNumber').value.trim();
             const code = document.getElementById('secretCode').value.trim();
-            
             const captchaInput = document.getElementById('captchaInput').value.trim();
             const captchaUserAnswer = captchaInput === "" ? null : parseInt(captchaInput);
-            
             const error = document.getElementById('errorMsg');
 
             if (num === db.examNumber && code === db.secretCode && captchaUserAnswer === correctAnswer) {
                 error.style.display = 'none';
-                
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('loadingBox').style.display = 'block';
 
@@ -475,33 +405,28 @@
                     document.getElementById('displayExamNumber').innerText = db.examNumber;
                     document.getElementById('studentName').innerText = db.name;
                     document.getElementById('studentTotal').innerText = db.total;
-                    document.getElementById('studentAverage').innerText = db.average;
+                    
+                    // إضافة النسبة المئوية للمعدل مثل الصورة
+                    document.getElementById('studentAverage').innerText = "%" + db.average;
 
                     let subjectsHTML = "";
                     db.subjects.forEach(sub => {
                         subjectsHTML += `
-                            <tr>
-                                <td>${sub.name}</td>
-                                <td>${sub.grade}</td>
-                            </tr>
+                            <div class="modern-row">
+                                <span class="modern-label">${sub.name}</span>
+                                <span class="modern-value">${sub.grade}</span>
+                            </div>
                         `;
                     });
                     document.getElementById('subjectsContainer').innerHTML = subjectsHTML;
 
-                    document.getElementById('qrcode').innerHTML = '<img src="qr-code.svg" alt="Student QR Code" style="width: 150px; height: 150px; display: block; margin: 0 auto;">';
-
                     document.getElementById('loadingBox').style.display = 'none';
                     document.getElementById('resultBox').style.display = 'block';
 
-                }, 5000); 
+                }, 2000); // قللت وقت التحميل لـ 2 ثانية حتى يكون أسرع وأشبه بالتطبيقات
 
             } else {
                 error.style.display = 'block';
-                if (num === db.examNumber && code === db.secretCode && captchaUserAnswer !== correctAnswer) {
-                    error.innerText = "الناتج الحسابي غير صحيح! حاول مرة أخرى.";
-                } else {
-                    error.innerText = "البيانات غير صحيحة! يرجى التأكد من الرقم والرمز السري وناتج المعادلة.";
-                }
                 generateCaptcha();
             }
         }
