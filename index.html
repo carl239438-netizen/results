@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة النتائج - النظام الحديث</title>
+    <title>بوابة النتائج - النظام الحديث المطور</title>
     <style>
         :root {
             --bg-color: #f4f6f9;
@@ -46,18 +46,31 @@
             text-align: center;
             margin-bottom: 40px;
         }
+
+        .logo {
+            width: 85px;
+            height: auto;
+            margin-bottom: 12px;
+        }
         
+        .ministry-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
         .login-header h2 {
             margin: 0;
             color: var(--text-main);
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: bold;
         }
 
         .login-header p {
             margin: 5px 0 0 0;
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .form-group {
@@ -152,7 +165,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* --- واجهة النتيجة الحديثة (Mobile App Style) --- */
+        /* --- واجهة النتيجة --- */
         .result-box {
             display: none;
             padding: 20px;
@@ -254,6 +267,9 @@
         <!-- واجهة تسجيل الدخول -->
         <div class="login-box" id="loginBox">
             <div class="login-header">
+                <!-- إضافة شعار الجمهورية والتربية -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Emblem_of_Iraq.svg/200px-Emblem_of_Iraq.svg.png" alt="شعار جمهورية العراق" class="logo">
+                <div class="ministry-title">جمهورية العراق - وزارة التربية</div>
                 <h2>بوابة الاستعلام الإلكتروني</h2>
                 <p>يرجى إدخال بياناتك لعرض النتيجة</p>
             </div>
@@ -285,7 +301,7 @@
             <div style="color: #555; font-weight: bold; font-size: 1.1rem;">جاري جلب البيانات...</div>
         </div>
 
-        <!-- واجهة النتيجة (التصميم الحديث) -->
+        <!-- واجهة النتيجة (بعد التعديل والترتيب) -->
         <div class="result-box" id="resultBox">
             
             <h4 class="section-title">معلومات الطالب</h4>
@@ -314,11 +330,7 @@
                 </div>
             </div>
 
-            <h4 class="section-title">الدرجات</h4>
-            <div class="app-card" id="subjectsContainer">
-                <!-- سيتم إضافة المواد هنا برمجياً -->
-            </div>
-
+            <!-- الخلاصة انرفعت فوك المواد -->
             <h4 class="section-title">الخلاصة</h4>
             <div class="app-card">
                 <div class="modern-row">
@@ -337,6 +349,12 @@
                     <span class="modern-label">النتيجة النهائية</span>
                     <span class="badge-success">ناجح</span>
                 </div>
+            </div>
+
+            <!-- المواد نزلت جوة -->
+            <h4 class="section-title">الدرجات</h4>
+            <div class="app-card" id="subjectsContainer">
+                <!-- سيتم إضافة المواد هنا برمجياً -->
             </div>
 
             <button class="logout-btn" onclick="logout()">عودة للصفحة الرئيسية</button>
@@ -406,7 +424,6 @@
                     document.getElementById('studentName').innerText = db.name;
                     document.getElementById('studentTotal').innerText = db.total;
                     
-                    // إضافة النسبة المئوية للمعدل مثل الصورة
                     document.getElementById('studentAverage').innerText = "%" + db.average;
 
                     let subjectsHTML = "";
@@ -423,7 +440,7 @@
                     document.getElementById('loadingBox').style.display = 'none';
                     document.getElementById('resultBox').style.display = 'block';
 
-                }, 2000); // قللت وقت التحميل لـ 2 ثانية حتى يكون أسرع وأشبه بالتطبيقات
+                }, 2000); 
 
             } else {
                 error.style.display = 'block';
