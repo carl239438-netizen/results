@@ -11,7 +11,7 @@
             --text-main: #1a1a1a;
             --text-muted: #555555;
             --border-color: #e0e0e0;
-            --primary: #1b5e20; /* أخضر وزاري غامق */
+            --primary: #1b5e20;
             --primary-hover: #144d18;
             --success-bg: #e8f5e9;
             --success-text: #2e7d32;
@@ -113,7 +113,7 @@
             box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.1);
         }
         
-        /* الكابتشا */
+        /* الكابتشا (تم التعديل هنا لضمان الاستقامة) */
         .captcha-box {
             background-color: #fafafa;
             padding: 20px;
@@ -131,18 +131,23 @@
             font-weight: 600;
         }
         .captcha-equation {
-            font-size: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px; /* مسافة متساوية بين الأرقام */
+            font-size: 2.2rem;
             font-weight: 900;
             color: var(--primary);
-            margin-bottom: 15px;
-            direction: ltr;
-            letter-spacing: 2px;
+            margin-bottom: 20px;
+            direction: ltr; /* الترتيب حصراً من اليسار لليمين */
         }
         .captcha-box input {
-            width: 100%;
+            width: 70%; /* تصغير الحقل ليكون أرتب */
+            margin: 0 auto;
+            display: block;
             padding: 14px;
             border-radius: 10px;
-            border: 1.5px solid #dcdcdc;
+            border: 2px solid #dcdcdc;
             text-align: center;
             font-size: 1.2rem;
             font-weight: bold;
@@ -218,7 +223,7 @@
             border-bottom: 2px solid var(--border-color);
         }
         .result-header-logo img {
-            width: 60px;
+            width: 65px;
         }
         .result-header-logo h3 {
             margin: 10px 0 0 0;
@@ -338,7 +343,10 @@
         <!-- واجهة تسجيل الدخول -->
         <div class="login-box" id="loginBox">
             <div class="login-header">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Emblem_of_Iraq.svg/200px-Emblem_of_Iraq.svg.png" alt="شعار جمهورية العراق" class="logo">
+                <!-- تم وضع رابط أساسي للشعار مع رابط بديل (onerror) لضمان عدم ظهور الشعار المكسور -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Emblem_of_Iraq.svg" 
+                     onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/8074/8074800.png';" 
+                     alt="شعار جمهورية العراق" class="logo">
                 <div class="ministry-title">جمهورية العراق</div>
                 <div class="ministry-sub">وزارة التربية - اللجنة الدائمة للامتحانات</div>
                 <p>بوابة الاستعلام الإلكتروني للنتائج</p>
@@ -356,8 +364,12 @@
                 
                 <div class="captcha-box">
                     <div class="captcha-title">التحقق الأمني - حل المعادلة التالية:</div>
+                    <!-- تم التعديل هنا لتكون المعادلة مسطرة تماماً -->
                     <div class="captcha-equation">
-                        <span id="num1"></span> × <span id="num2"></span> = 
+                        <span id="num1"></span> 
+                        <span>×</span> 
+                        <span id="num2"></span> 
+                        <span>=</span> 
                     </div>
                     <input type="number" id="captchaInput" placeholder="اكتب الناتج هنا">
                 </div>
@@ -378,7 +390,10 @@
         <div class="result-box" id="resultBox">
             
             <div class="result-header-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Emblem_of_Iraq.svg/200px-Emblem_of_Iraq.svg.png" alt="شعار التربية">
+                <!-- شعار النتيجة أيضاً تم دعمه برابط بديل -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Emblem_of_Iraq.svg" 
+                     onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/8074/8074800.png';" 
+                     alt="شعار التربية">
                 <h3>وزارة التربية العراقية</h3>
             </div>
 
@@ -408,12 +423,11 @@
                 </div>
             </div>
 
-            <!-- الخلاصة مرفوعة فوك -->
             <h4 class="section-title">الخلاصة والنتيجة</h4>
             <div class="app-card">
                 <div class="modern-row">
                     <span class="modern-label">الفرع</span>
-                    <span class="modern-value">السادس العلمي</span>
+                    <span class="modern-value">علمي</span>
                 </div>
                 <div class="modern-row">
                     <span class="modern-label">المجموع الكلي</span>
@@ -429,7 +443,6 @@
                 </div>
             </div>
 
-            <!-- المواد والدرجات صايرة جوة -->
             <h4 class="section-title">تفاصيل الدرجات</h4>
             <div class="app-card" id="subjectsContainer">
                 <!-- سيتم تعبئة المواد هنا برمجياً -->
@@ -442,7 +455,6 @@
     </div>
 
     <script>
-        // بيانات الطالب للبحث
         const db = {
             examNumber: "26140100037",
             secretCode: "6475839208",
@@ -462,7 +474,6 @@
 
         let correctAnswer = 0;
 
-        // توليد العملية الحسابية
         function generateCaptcha() {
             let n1 = Math.floor(Math.random() * 10) + 1; 
             let n2 = Math.floor(Math.random() * 10) + 1; 
@@ -476,7 +487,6 @@
             generateCaptcha();
         };
 
-        // زر إظهار/إخفاء البيانات الحساسة
         function toggleVisibility(elementId, btnElement) {
             const el = document.getElementById(elementId);
             if (el.classList.contains('blurred')) {
@@ -488,7 +498,6 @@
             }
         }
 
-        // عملية تسجيل الدخول
         function processLogin() {
             const num = document.getElementById('examNumber').value.trim();
             const code = document.getElementById('secretCode').value.trim();
@@ -501,7 +510,6 @@
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('loadingBox').style.display = 'block';
 
-                // وقت تحميل وهمي (ثانيتين)
                 setTimeout(() => {
                     document.getElementById('displayExamNumber').innerText = db.examNumber;
                     document.getElementById('studentName').innerText = db.name;
@@ -509,7 +517,6 @@
                     
                     document.getElementById('studentAverage').innerText = "% " + db.average;
 
-                    // تعبئة الدرجات
                     let subjectsHTML = "";
                     db.subjects.forEach(sub => {
                         subjectsHTML += `
@@ -528,11 +535,10 @@
 
             } else {
                 error.style.display = 'block';
-                generateCaptcha(); // تغيير المعادلة في حال الخطأ
+                generateCaptcha();
             }
         }
 
-        // تسجيل الخروج
         function logout() {
             window.location.reload();
         }
