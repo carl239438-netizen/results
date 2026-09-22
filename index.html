@@ -3,548 +3,412 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة النتائج الوزارية - وزارة التربية</title>
+    <title>منصة قدم - HEPIQ</title>
     <style>
         :root {
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-main: #1a1a1a;
-            --text-muted: #555555;
-            --border-color: #e0e0e0;
-            --primary: #1b5e20;
-            --primary-hover: #144d18;
-            --success-bg: #e8f5e9;
-            --success-text: #2e7d32;
+            --bg-color: #f4f6f8;
+            --primary: #7a284e; /* لون الهيدر الماروني */
+            --secondary: #2b7a78; /* لون الأزرار الأخضر */
+            --text-main: #333;
+            --text-muted: #777;
+            --card-bg: #fff;
+            --border: #e0e0e0;
         }
 
         body {
+            background-color: #333;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
             margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .phone-container {
+        /* محاكاة شاشة الموبايل */
+        .mobile-app {
             width: 100%;
-            max-width: 450px; 
-            background-color: var(--bg-color);
-            min-height: 100vh;
-            box-sizing: border-box;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        /* --- واجهة تسجيل الدخول --- */
-        .login-box {
-            padding: 50px 25px;
-            background-color: var(--card-bg);
-            min-height: 100vh;
-            box-sizing: border-box;
+            max-width: 400px;
+            height: 850px;
+            max-height: 100vh;
+            background: var(--bg-color);
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
+
+        .screen { display: none; padding: 20px; flex-grow: 1; animation: fadeIn 0.3s; }
+        .screen.active { display: block; }
+
+        .app-header {
+            text-align: center; margin-bottom: 20px;
+        }
+        .app-header img { width: 60px; border-radius: 12px; }
+        .app-header h2 { margin: 10px 0 5px; color: var(--primary); font-size: 1.2rem; }
+
+        /* العناصر المشتركة */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
+        .form-control {
+            width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px;
+            background: #fafafa; font-size: 1rem; box-sizing: border-box; outline: none;
+        }
+        .form-control:focus { border-color: var(--primary); }
+
+        .btn {
+            width: 100%; padding: 14px; border: none; border-radius: 8px;
+            font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: var(--secondary); color: white; }
+        .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+
+        /* بطاقة الطالب */
+        .student-card {
+            background: var(--primary); color: white; border-radius: 12px; padding: 20px;
+            margin-bottom: 20px; background-image: linear-gradient(135deg, #7a284e, #4a152d);
+        }
+        .student-card h3 { margin: 0 0 15px; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; }
+        .student-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem; }
+        .student-grid div span { display: block; color: #d0a3b8; font-size: 0.75rem; margin-bottom: 2px; }
+
+        /* البوابات والقنوات */
+        .portal-card, .channel-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+            padding: 15px; margin-bottom: 15px; text-align: center;
+        }
+        .portal-card h4 { margin: 0 0 10px; color: var(--text-main); }
+        .dates { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; }
         
-        .login-header {
-            text-align: center;
-            margin-bottom: 35px;
-            width: 100%;
-        }
+        .channel-card { display: flex; align-items: center; justify-content: space-between; text-align: right; }
+        .channel-card h4 { margin: 0 0 5px; }
+        .channel-card p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
 
-        .logo {
-            width: 85px;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
-        }
+        /* شاشة الرغبات */
+        .choices-header { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 15px; font-weight: bold; }
+        .badge { background: #e0e0e0; padding: 4px 8px; border-radius: 4px; }
         
-        .ministry-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .ministry-sub {
-            font-size: 1rem;
-            color: var(--text-main);
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .login-header p {
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .form-container {
-            width: 100%;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            width: 100%;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--text-main);
-        }
-        .form-group input {
-            width: 100%;
-            padding: 16px;
-            border: 1.5px solid #dcdcdc;
-            border-radius: 12px;
-            box-sizing: border-box;
-            text-align: center;
-            font-size: 1.1rem;
-            background-color: #fcfcfc;
-            outline: none;
-            transition: all 0.3s ease;
-            font-family: monospace;
-        }
-        .form-group input:focus {
-            border-color: var(--primary);
-            background-color: #fff;
-            box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.1);
-        }
+        .add-box { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px; }
         
-        /* الكابتشا */
-        .captcha-box {
-            background-color: #fafafa;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1.5px dashed #ccc;
-            margin-bottom: 25px;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
+        .choice-item {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+            padding: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
         }
-        .captcha-title {
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-        .captcha-equation {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px; 
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: var(--primary);
-            margin-bottom: 20px;
-            direction: ltr; 
-        }
-        .captcha-box input {
-            width: 70%; 
-            margin: 0 auto;
-            display: block;
-            padding: 14px;
-            border-radius: 10px;
-            border: 2px solid #dcdcdc;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            outline: none;
-            transition: 0.3s;
-        }
-        .captcha-box input:focus {
-            border-color: var(--primary);
-        }
+        .choice-info { flex-grow: 1; margin-right: 10px; }
+        .choice-info strong { display: block; font-size: 0.9rem; color: var(--primary); }
+        .choice-info small { color: var(--text-muted); font-size: 0.8rem; }
+        .choice-actions button { background: none; border: none; font-size: 1.2rem; padding: 5px; cursor: pointer; }
+        .btn-del { color: #dc3545; }
 
-        .btn-primary {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 18px;
-            font-size: 1.15rem;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            box-shadow: 0 6px 15px rgba(27, 94, 32, 0.25);
-        }
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
-        .error-text {
-            color: #d32f2f;
-            text-align: center;
-            font-size: 0.95rem;
-            margin-top: 15px;
-            display: none;
-            font-weight: bold;
-            background-color: #ffebee;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        /* --- شاشة التحميل --- */
-        .loading-box {
-            display: none;
-            text-align: center;
-            padding-top: 250px;
-            height: 100vh;
-            background-color: var(--card-bg);
-            box-sizing: border-box;
-        }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* --- واجهة النتيجة --- */
-        .result-box {
-            display: none;
-            padding: 20px;
-            padding-bottom: 40px;
-        }
-
-        .result-header-logo {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-        }
-        .result-header-logo img {
-            width: 65px;
-            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
-        }
-        .result-header-logo h3 {
-            margin: 10px 0 0 0;
-            font-size: 1.1rem;
-            color: var(--primary);
-        }
-
-        .section-title {
-            color: var(--text-main);
-            font-size: 1.1rem;
-            font-weight: 900;
-            margin: 25px 0 12px 5px;
-            display: flex;
-            align-items: center;
-        }
-        .section-title::before {
-            content: "";
-            display: inline-block;
-            width: 8px;
-            height: 18px;
-            background-color: var(--primary);
-            margin-left: 8px;
-            border-radius: 4px;
-        }
-
-        .app-card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 0 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-            border: 1px solid rgba(0,0,0,0.02);
-        }
-
-        .modern-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .modern-row:last-child {
-            border-bottom: none;
-        }
-
-        .modern-label {
-            color: var(--text-muted);
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
-        .modern-value {
-            color: var(--text-main);
-            font-size: 1.1rem;
-            font-weight: 800;
-        }
-
-        .badge-success {
-            background-color: var(--success-bg);
-            color: var(--success-text);
-            padding: 6px 20px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            border: 1px solid #c8e6c9;
-        }
-
-        /* التغويش */
-        .blurred {
-            filter: blur(5px);
-            user-select: none;
-            transition: filter 0.3s ease;
-        }
-        .eye-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.85rem;
-            color: #1976d2;
-            text-decoration: underline;
-            padding: 0 10px;
-            font-family: inherit;
-            font-weight: bold;
-            outline: none;
-        }
-
-        .val-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .logout-btn {
-            display: block;
-            width: 100%;
-            background-color: transparent;
-            border: 2px solid #ccc;
-            border-radius: 12px;
-            padding: 16px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--text-muted);
-            cursor: pointer;
-            margin-top: 35px;
-            text-align: center;
-            transition: 0.3s;
-        }
-        .logout-btn:hover {
-            background-color: #f0f0f0;
-            color: var(--text-main);
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="phone-container">
-
-        <!-- واجهة تسجيل الدخول -->
-        <div class="login-box" id="loginBox">
-            <div class="login-header">
-                <!-- الصورة تنسحب من ملفاتك مباشرة -->
-                <img src="logo.png" alt="شعار جمهورية العراق" class="logo">
-                
-                <div class="ministry-title">جمهورية العراق</div>
-                <div class="ministry-sub">وزارة التربية - اللجنة الدائمة للامتحانات</div>
-                <p>بوابة الاستعلام الإلكتروني للنتائج</p>
+    <div class="mobile-app">
+        
+        <!-- 1. شاشة الدخول -->
+        <div class="screen active" id="screen-login">
+            <div class="app-header" style="margin-top: 50px;">
+                <div style="width: 80px; height: 80px; background: #7a284e; color: white; border-radius: 20px; display: flex; justify-content: center; align-items: center; margin: 0 auto; font-size: 1.5rem; font-weight: bold;">HEPIQ</div>
+                <h2>مرحباً بك</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">سجل دخول بواسطة حسابك الشخصي</p>
             </div>
-
-            <div class="form-container">
-                <div class="form-group">
-                    <label>الرقم الامتحاني</label>
-                    <input type="text" id="examNumber" placeholder="أدخل الرقم الامتحاني" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label>الرمز السري</label>
-                    <input type="password" id="secretCode" placeholder="••••••••••">
-                </div>
-                
-                <div class="captcha-box">
-                    <div class="captcha-title">التحقق الأمني - حل المعادلة التالية:</div>
-                    <div class="captcha-equation">
-                        <span id="num1"></span> 
-                        <span>×</span> 
-                        <span id="num2"></span> 
-                        <span>=</span> 
-                    </div>
-                    <input type="number" id="captchaInput" placeholder="اكتب الناتج هنا">
-                </div>
-
-                <button class="btn-primary" onclick="processLogin()">بحث عن النتيجة</button>
-                <div class="error-text" id="errorMsg">البيانات غير صحيحة أو ناتج المعادلة خاطئ!</div>
-            </div>
-        </div>
-
-        <!-- شاشة التحميل -->
-        <div class="loading-box" id="loadingBox">
-            <div class="loader"></div>
-            <div style="color: var(--primary); font-weight: bold; font-size: 1.2rem;">جاري الاتصال بقاعدة البيانات...</div>
-            <div style="color: #777; font-size: 0.9rem; margin-top: 8px;">يرجى الانتظار</div>
-        </div>
-
-        <!-- واجهة النتيجة -->
-        <div class="result-box" id="resultBox">
             
-            <div class="result-header-logo">
-                <img src="logo.png" alt="شعار جمهورية العراق">
-                <h3>وزارة التربية العراقية</h3>
+            <div class="form-group">
+                <label>الرقم الامتحاني او اسم المستخدم (بالإنجليزية فقط)</label>
+                <input type="text" class="form-control" id="examNo" value="26140100037">
             </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" class="form-control" id="pass" value="6475839208">
+            </div>
+            <button class="btn btn-primary" onclick="nav('screen-dash')">تسجيل الدخول</button>
+        </div>
 
-            <h4 class="section-title" style="color: var(--text-muted); font-size: 0.95rem; font-weight: 800;">معلومات الطالب</h4>
-            <div class="app-card">
-                <div class="modern-row">
-                    <span class="modern-label">الاسم</span>
-                    <span class="modern-value" id="studentName"></span>
-                </div>
-                <div class="modern-row">
-                    <span class="modern-label">الرقم الامتحاني</span>
-                    <div class="val-container">
-                        <button class="eye-btn" onclick="toggleVisibility('displayExamNumber', this)">إظهار</button>
-                        <span class="modern-value blurred" id="displayExamNumber"></span>
-                    </div>
-                </div>
-                <div class="modern-row">
-                    <span class="modern-label">المدرسة</span>
-                    <div class="val-container">
-                        <button class="eye-btn" onclick="toggleVisibility('displaySchool', this)">إظهار</button>
-                        <span class="modern-value blurred" id="displaySchool">اعدادية النخبة للبنين</span>
-                    </div>
-                </div>
-                <div class="modern-row">
-                    <span class="modern-label">المحافظة</span>
-                    <span class="modern-value">كربلاء المقدسة</span>
+        <!-- 2. لوحة التحكم (البوابات) -->
+        <div class="screen" id="screen-dash">
+            <h2 style="font-size: 1.2rem; color: var(--primary);">مرحباً ✋</h2>
+            
+            <div class="student-card">
+                <h3>جعفر الصادق محمد باقر مطلك</h3>
+                <div class="student-grid">
+                    <div><span>الرقم الامتحاني</span> 26140100037</div>
+                    <div><span>المحافظة</span> كربلاء</div>
+                    <div><span>الفرع الدراسي</span> العلمي</div>
+                    <div><span>الجنس</span> ذكر</div>
+                    <div><span>سنة التخرج</span> 2025-2026</div>
+                    <div><span>رقم الهاتف</span> 07800000000</div>
                 </div>
             </div>
 
-            <h4 class="section-title" style="color: var(--text-muted); font-size: 0.95rem; font-weight: 800;">الخلاصة والنتيجة</h4>
-            <div class="app-card">
-                <div class="modern-row">
-                    <span class="modern-label">الفرع</span>
-                    <span class="modern-value">علمي</span>
+            <h3 style="font-size: 1rem; margin-bottom: 10px;">البوابات</h3>
+            <div class="portal-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="margin:0;">قناة القبول المركزي</h4>
+                    <span style="background: #e6f4ea; color: #1e8e3e; font-size: 0.7rem; padding: 3px 8px; border-radius: 10px;">مفتوحة</span>
                 </div>
-                <div class="modern-row">
-                    <span class="modern-label">المجموع الكلي</span>
-                    <span class="modern-value" id="studentTotal"></span>
+                <div class="dates">
+                    <div>تاريخ البدء<br><strong>9 أيلول 2026</strong></div>
+                    <div>تاريخ الانتهاء<br><strong>4 تشرين الأول 2026</strong></div>
                 </div>
-                <div class="modern-row">
-                    <span class="modern-label">المعدل</span>
-                    <span class="modern-value" id="studentAverage" style="direction: ltr; color: var(--primary);"></span>
+                <button class="btn btn-secondary" onclick="nav('screen-id')">التقديم ➔</button>
+            </div>
+        </div>
+
+        <!-- 3. اختيار الوثيقة -->
+        <div class="screen" id="screen-id">
+            <h2 style="font-size: 1.1rem; text-align: center; color: var(--primary);">اختر الوثيقة</h2>
+            <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted);">اختر وثيقة واحدة فقط: البطاقة الوطنية أو جواز السفر</p>
+            
+            <div class="portal-card" style="margin-top: 30px; cursor: pointer;" onclick="nav('screen-face')">
+                <h3 style="color: var(--text-main);">البطاقة الوطنية الموحدة</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">اختيار ➔</p>
+            </div>
+        </div>
+
+        <!-- 4. مسح الوجه (محاكاة) -->
+        <div class="screen" id="screen-face">
+            <h2 style="font-size: 1.1rem; text-align: center; color: var(--primary);">التقاط صورة للوجه</h2>
+            <div style="width: 250px; height: 250px; border: 4px dashed var(--secondary); border-radius: 50%; margin: 40px auto; display: flex; justify-content: center; align-items: center; color: var(--text-muted);">
+                ضع وجهك داخل الدائرة
+            </div>
+            <div style="background: #ffebee; color: #c62828; padding: 10px; border-radius: 8px; font-size: 0.8rem; margin-bottom: 20px;">
+                1- ضع وجهك في الاطار الدائري.<br>
+                2- عند ظهور علامة "العين" يرجى تقريب الجهاز من قرنية العين.
+            </div>
+            <button class="btn btn-secondary" onclick="nav('screen-channels')">تم التحقق بنجاح ➔</button>
+        </div>
+
+        <!-- 5. اختيار القناة -->
+        <div class="screen" id="screen-channels">
+            <h2 style="font-size: 1.1rem; text-align: center; color: var(--primary);">قناة القبول المركزي</h2>
+            <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted);">بوابة الطالب - اختيار نوع القناة</p>
+
+            <div class="channel-card">
+                <div>
+                    <h4>القناة العامة</h4>
+                    <p>التقديم متاح لجميع الطلبة وفق الضوابط</p>
                 </div>
-                <div class="modern-row">
-                    <span class="modern-label">الحالة</span>
-                    <span class="badge-success">ناجح</span>
+                <button class="btn btn-secondary" style="width: auto; padding: 8px 15px;" onclick="nav('screen-instructions')">القناة العامة ➔</button>
+            </div>
+
+            <div class="channel-card" style="opacity: 0.6;">
+                <div>
+                    <h4>قناة ذوي الشهداء</h4>
+                    <p>مخصصة لذوي الشهداء - يتطلب تفعيل الامتياز أولاً</p>
+                </div>
+                <span style="font-size: 0.8rem; color: #c62828;">غير مفعل</span>
+            </div>
+        </div>
+
+        <!-- 6. التعليمات -->
+        <div class="screen" id="screen-instructions">
+            <h2 style="font-size: 1.1rem; color: var(--primary);">قناة القبول المركزي (العامة)</h2>
+            <div style="background: #fff3cd; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; font-size: 0.8rem; line-height: 1.6; margin-bottom: 20px; height: 350px; overflow-y: auto;">
+                <ol style="padding-right: 15px; margin: 0;">
+                    <li>يجب عليك التقديم على 50 خياراً على الأقل.</li>
+                    <li>يجب أن لا يقل عدد المعاهد عن 10.</li>
+                    <li>ينبغي عليك التسجيل في جهة القبول التي ستحصل عليها بحسب اختياراتك في الاستمارة.</li>
+                    <li>يكون التقديم إلى كليات الهندسة من خلال الاستمارة بحسب الأقسام.</li>
+                    <li>الاستمارة لا تعتبر مستلمة إلا بعد الحفظ النهائي.</li>
+                </ol>
+            </div>
+            
+            <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; font-size: 0.85rem; font-weight: bold;">
+                <input type="checkbox" id="agreeChk" style="width: 20px; height: 20px;">
+                <label for="agreeChk">نعم، اطلعت على التعليمات أعلاه وجاهز للتقديم.</label>
+            </div>
+            
+            <button class="btn btn-primary" onclick="goToForm()">متابعة</button>
+        </div>
+
+        <!-- 7. الاستمارة (الرغبات) -->
+        <div class="screen" id="screen-form">
+            <h2 style="font-size: 1.1rem; color: var(--primary); margin-top: 0;">اختيار الجامعة والكلية</h2>
+            
+            <div class="add-box">
+                <div class="form-group">
+                    <label>الجامعة</label>
+                    <select class="form-control" id="uniSelect" onchange="updateCols()">
+                        <option value="">اختر الجامعة</option>
+                        <option value="الجامعة التكنولوجية">الجامعة التكنولوجية</option>
+                        <option value="الجامعة العراقية">الجامعة العراقية</option>
+                        <option value="جامعة بغداد">جامعة بغداد</option>
+                        <option value="الجامعة المستنصرية">الجامعة المستنصرية</option>
+                        <option value="جامعة كربلاء">جامعة كربلاء</option>
+                        <option value="الجامعة التقنية الوسطى">الجامعة التقنية الوسطى (معاهد)</option>
+                        <option value="جامعة الفرات الاوسط التقنية">جامعة الفرات الاوسط التقنية (معاهد)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الكلية / القسم</label>
+                    <select class="form-control" id="colSelect">
+                        <option value="">اختر القسم</option>
+                    </select>
+                </div>
+                <button class="btn btn-outline" style="border-color: var(--secondary); color: var(--secondary);" onclick="addChoice()">+ إضافة</button>
+            </div>
+
+            <div class="choices-header">
+                <div>خياراتك حسب الرغبة</div>
+                <div>
+                    <span class="badge" id="instBadge">معاهد 0 / 10</span>
+                    <span class="badge" id="totalBadge" style="margin-right: 5px;">0 من 50</span>
                 </div>
             </div>
 
-            <!-- التعديل الجديد لقسم معلومات النتيجة والمواد -->
-            <h4 class="section-title" style="color: var(--text-main); font-size: 1.15rem; font-weight: 900;">معلومات النتيجة</h4>
-            <div class="app-card" id="subjectsContainer">
-                <!-- سيتم تعبئة المواد والعناوين هنا برمجياً -->
+            <div id="choicesList" style="flex-grow: 1; overflow-y: auto; max-height: 250px; margin-bottom: 15px;"></div>
+
+            <button class="btn btn-primary" onclick="confirmChoices()">حفظ الاختيارات</button>
+        </div>
+
+        <!-- 8. تأكيد الحفظ -->
+        <div class="screen" id="screen-confirm">
+            <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; margin-top: 50px;">
+                <h2 style="color: var(--primary); font-size: 1.2rem;">تأكيد التقديم</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">لتأكيد حفظ اختياراتك، أعد إدخال الرقم الامتحاني</p>
+                
+                <input type="text" class="form-control" id="confirmExamNo" placeholder="الرقم الامتحاني" style="margin-bottom: 15px; text-align: center;">
+                
+                <button class="btn btn-primary" onclick="finalSave()">تأكيد وحفظ</button>
+                <button class="btn btn-outline" style="margin-top: 10px;" onclick="nav('screen-form')">إلغاء</button>
+            </div>
+        </div>
+
+        <!-- 9. الوصل النهائي -->
+        <div class="screen" id="screen-receipt">
+            <div style="text-align: center; margin-bottom: 15px;">
+                <h2 style="color: var(--primary); font-size: 1.1rem; margin-bottom: 5px;">استمارة قناة القبول المركزي</h2>
+                <span class="badge" style="background: #e6f4ea; color: #1e8e3e;">تمت المهمة بنجاح</span>
             </div>
 
-            <button class="logout-btn" onclick="logout()">خروج وعودة للبحث</button>
+            <div class="student-card" style="padding: 15px;">
+                <div class="student-grid">
+                    <div><span>الاسم الرباعي</span> جعفر الصادق محمد باقر مطلك</div>
+                    <div><span>الرقم الامتحاني</span> 26140100037</div>
+                    <div><span>الفرع</span> علمي</div>
+                    <div><span>تاريخ الإصدار</span> <span id="dateStr"></span></div>
+                </div>
+            </div>
 
+            <h3 style="font-size: 0.95rem; margin-bottom: 10px;">خياراتك حسب الرغبة</h3>
+            <div id="receiptList" style="max-height: 350px; overflow-y: auto; margin-bottom: 15px;"></div>
+
+            <button class="btn btn-outline" style="border-color: var(--secondary); color: var(--secondary);" onclick="nav('screen-form')">✎ تعديل الخيارات</button>
+            <button class="btn btn-primary" style="margin-top: 10px;" onclick="location.reload()">تسجيل خروج</button>
         </div>
 
     </div>
 
     <script>
         const db = {
-            examNumber: "26140100037",
-            secretCode: "6475839208",
-            name: "جعفر الصادق محمد باقر مطلك",
-            total: "640", 
-            average: "92.43", 
-            subjects: [
-                { name: "التربية الإسلامية", grade: 95 },
-                { name: "اللغة العربية", grade: 89 },
-                { name: "اللغة الإنكليزية", grade: 90 },
-                { name: "الرياضيات", grade: 93 },
-                { name: "الأحياء", grade: 91 },
-                { name: "الكيمياء", grade: 90 },
-                { name: "الفيزياء", grade: 92 }
-            ]
+            "الجامعة التكنولوجية": ["كلية هندسة الكهروميكانيك / قسم هندسة الطاقة", "كلية هندسة الحاسوب"],
+            "الجامعة العراقية": ["كلية الهندسة / قسم هندسة الشبكات", "كلية الطب"],
+            "جامعة بغداد": ["كلية طب الكندي", "كلية العلوم / قسم الرياضيات", "كلية الهندسة"],
+            "الجامعة المستنصرية": ["كلية العلوم", "كلية الهندسة"],
+            "جامعة كربلاء": ["كلية الطب", "كلية الصيدلة", "كلية العلوم", "كلية الهندسة"],
+            "الجامعة التقنية الوسطى": ["معهد التكنولوجيا / بغداد (معهد)", "المعهد الطبي التقني (معهد)"],
+            "جامعة الفرات الاوسط التقنية": ["المعهد الطبي التقني / كربلاء (معهد)", "المعهد التكنولوجي / بابل (معهد)"]
         };
 
-        let correctAnswer = 0;
+        let myChoices = [];
 
-        function generateCaptcha() {
-            let n1 = Math.floor(Math.random() * 10) + 1; 
-            let n2 = Math.floor(Math.random() * 10) + 1; 
-            correctAnswer = n1 * n2;
-            document.getElementById('num1').innerText = n1;
-            document.getElementById('num2').innerText = n2;
-            document.getElementById('captchaInput').value = ""; 
+        function nav(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
 
-        window.onload = function() {
-            generateCaptcha();
-        };
+        function goToForm() {
+            if(!document.getElementById('agreeChk').checked) {
+                alert("يرجى الموافقة على التعليمات أولاً"); return;
+            }
+            nav('screen-form');
+        }
 
-        function toggleVisibility(elementId, btnElement) {
-            const el = document.getElementById(elementId);
-            if (el.classList.contains('blurred')) {
-                el.classList.remove('blurred');
-                btnElement.innerText = 'إخفاء'; 
-            } else {
-                el.classList.add('blurred');
-                btnElement.innerText = 'إظهار'; 
+        function updateCols() {
+            let uni = document.getElementById("uniSelect").value;
+            let colSel = document.getElementById("colSelect");
+            colSel.innerHTML = '<option value="">اختر القسم</option>';
+            if(db[uni]) {
+                db[uni].forEach(c => colSel.innerHTML += `<option value="${c}">${c}</option>`);
             }
         }
 
-        function processLogin() {
-            const num = document.getElementById('examNumber').value.trim();
-            const code = document.getElementById('secretCode').value.trim();
-            const captchaInput = document.getElementById('captchaInput').value.trim();
-            const captchaUserAnswer = captchaInput === "" ? null : parseInt(captchaInput);
-            const error = document.getElementById('errorMsg');
+        function addChoice() {
+            let uni = document.getElementById("uniSelect").value;
+            let col = document.getElementById("colSelect").value;
+            if(!uni || !col) return;
+            if(myChoices.length >= 50) { alert("الحد الأقصى 50"); return; }
+            
+            myChoices.push({ uni, col });
+            renderFormList();
+        }
 
-            if (num === db.examNumber && code === db.secretCode && captchaUserAnswer === correctAnswer) {
-                error.style.display = 'none';
-                document.getElementById('loginBox').style.display = 'none';
-                document.getElementById('loadingBox').style.display = 'block';
+        function removeChoice(i) {
+            myChoices.splice(i, 1);
+            renderFormList();
+        }
 
-                setTimeout(() => {
-                    document.getElementById('displayExamNumber').innerText = db.examNumber;
-                    document.getElementById('studentName').innerText = db.name;
-                    document.getElementById('studentTotal').innerText = db.total;
-                    
-                    document.getElementById('studentAverage').innerText = "% " + db.average;
+        function renderFormList() {
+            let list = document.getElementById("choicesList");
+            list.innerHTML = "";
+            let instCount = myChoices.filter(x => x.col.includes("معهد")).length;
 
-                    // إضافة العناوين (المادة - الدرجة) وتعبئة الدرجات
-                    let subjectsHTML = `
-                        <div class="modern-row" style="border-bottom: 2px solid #ddd; padding-bottom: 12px; margin-bottom: 5px; margin-top: 5px;">
-                            <span style="color: #111; font-weight: 900; font-size: 1.15rem;">المادة</span>
-                            <span style="color: #111; font-weight: 900; font-size: 1.15rem;">الدرجة</span>
+            document.getElementById("totalBadge").innerText = `${myChoices.length} من 50`;
+            document.getElementById("totalBadge").style.color = (myChoices.length === 50) ? "green" : "black";
+            
+            document.getElementById("instBadge").innerText = `معاهد ${instCount} / 10`;
+            document.getElementById("instBadge").style.color = (instCount >= 10) ? "green" : "black";
+
+            myChoices.forEach((c, i) => {
+                list.innerHTML += `
+                    <div class="choice-item">
+                        <div style="background: var(--primary); color: white; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-left: 10px; font-weight: bold;">${i+1}</div>
+                        <div class="choice-info">
+                            <strong>${c.col}</strong>
+                            <small>${c.uni}</small>
                         </div>
-                    `;
-                    db.subjects.forEach(sub => {
-                        subjectsHTML += `
-                            <div class="modern-row">
-                                <span class="modern-label" style="font-weight: bold; color: #333;">${sub.name}</span>
-                                <span class="modern-value">${sub.grade}</span>
-                            </div>
-                        `;
-                    });
-                    document.getElementById('subjectsContainer').innerHTML = subjectsHTML;
-
-                    document.getElementById('loadingBox').style.display = 'none';
-                    document.getElementById('resultBox').style.display = 'block';
-
-                }, 2000); 
-
-            } else {
-                error.style.display = 'block';
-                generateCaptcha();
-            }
+                        <div class="choice-actions">
+                            <button class="btn-del" onclick="removeChoice(${i})">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
         }
 
-        function logout() {
-            window.location.reload();
+        function confirmChoices() {
+            let instCount = myChoices.filter(x => x.col.includes("معهد")).length;
+            if(myChoices.length !== 50) { alert("يجب اختيار 50 رغبة"); return; }
+            if(instCount < 10) { alert("يجب اختيار 10 معاهد على الأقل"); return; }
+            nav('screen-confirm');
+        }
+
+        function finalSave() {
+            let no = document.getElementById("confirmExamNo").value;
+            if(no !== "26140100037") { alert("الرقم الامتحاني غير مطابق"); return; }
+            
+            document.getElementById("dateStr").innerText = new Date().toLocaleString('ar-IQ');
+            let rList = document.getElementById("receiptList");
+            rList.innerHTML = "";
+            
+            myChoices.forEach((c, i) => {
+                rList.innerHTML += `
+                    <div class="choice-item" style="background: #fafafa;">
+                        <div class="choice-info">
+                            <small style="color: var(--primary); font-weight: bold;">الاختيار رقم (${i+1})</small>
+                            <strong>${c.uni}</strong>
+                            <small>${c.col}</small>
+                        </div>
+                    </div>
+                `;
+            });
+            nav('screen-receipt');
         }
     </script>
-</body> 
+</body>
 </html>
