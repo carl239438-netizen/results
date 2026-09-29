@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة القبول المركزي - وزارة التعليم العالي والبحث العلمي</title>
-    <!-- استدعاء خط تجوال المطابق لخطوط المواقع الحكومية الحديثة -->
+    <title>منصة القبول المركزي - نتائج الترشيح</title>
+    <!-- خط تجوال المعتمد في المنصات الحكومية -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-main: #333333;
-            --text-title: #8e959d;
-            --mohe-blue: #003da5;
-            --input-border: #e6e8eb;
-            --input-bg: #fdfdfd;
+            --bg-body: #f4f6f9;
+            --white: #ffffff;
+            --text-dark: #202124;
+            --text-muted: #5f6368;
+            --mohe-blue: #0b4596;
+            --mohe-blue-hover: #083473;
+            --border-color: #e0e0e0;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg-body);
+            color: var(--text-dark);
             margin: 0;
             padding: 0;
             display: flex;
@@ -29,82 +30,83 @@
             min-height: 100vh;
         }
 
-        .mobile-container {
+        .container {
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
+            padding: 30px 15px;
             box-sizing: border-box;
-            position: relative;
         }
 
-        /* ----- واجهة تسجيل الدخول ----- */
+        /* ----- اللوجو والترويسة المشتركة ----- */
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .logos-pill {
+            background-color: #ebf0f5;
+            border-radius: 50px;
+            padding: 12px 25px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .star-icon {
+            width: 35px;
+            margin-bottom: 10px;
+        }
+
+        .page-title {
+            color: #8893a0;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* ----- صفحة الدخول ----- */
         #loginPage {
             width: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        .logos-pill {
-            background-color: #f0f2f5;
-            border-radius: 50px;
-            padding: 10px 25px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            margin-bottom: 40px;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
-        }
-
-        .star-icon {
-            width: 40px;
-            margin-bottom: 10px;
-        }
-
-        .main-title {
-            color: var(--text-title);
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin: 0 0 35px 0;
-            letter-spacing: -0.5px;
         }
 
         .login-card {
-            background-color: var(--card-bg);
-            width: 100%;
-            border-radius: 20px;
-            padding: 30px 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.04);
-            box-sizing: border-box;
-            margin-bottom: 25px;
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 30px 20px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 25px;
-            text-align: right;
+            margin-bottom: 22px;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 700;
-            margin-bottom: 10px;
-            color: #111;
+            margin-bottom: 8px;
+            color: var(--text-dark);
         }
 
         .form-control {
             width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--input-border);
-            background-color: var(--input-bg);
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background-color: var(--white);
             font-family: 'Tajawal', sans-serif;
-            font-size: 1rem;
+            font-size: 1.05rem;
             box-sizing: border-box;
             outline: none;
             transition: 0.2s;
@@ -112,15 +114,13 @@
 
         .form-control:focus {
             border-color: var(--mohe-blue);
-            box-shadow: 0 0 0 3px rgba(0, 61, 165, 0.1);
         }
 
         .terms-text {
-            font-size: 0.8rem;
-            color: #777;
+            font-size: 0.75rem;
+            color: var(--text-muted);
             text-align: center;
-            line-height: 1.6;
-            margin-top: 15px;
+            line-height: 1.7;
         }
 
         .terms-text a {
@@ -129,163 +129,180 @@
             font-weight: 700;
         }
 
-        .bottom-blue-bar {
+        .btn-primary {
             background-color: var(--mohe-blue);
-            color: white;
+            color: var(--white);
             width: 100%;
             padding: 16px;
-            border-radius: 30px;
+            border-radius: 25px;
             border: none;
             font-family: 'Tajawal', sans-serif;
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(0, 61, 165, 0.3);
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--mohe-blue-hover);
         }
 
         .error-msg {
             color: #d32f2f;
-            background: #ffebee;
-            padding: 10px;
+            background: #fdecea;
+            padding: 12px;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: center;
-            width: 100%;
             display: none;
         }
 
-        /* ----- واجهة النتيجة النهائية ----- */
+        /* ----- صفحة النتائج الرسمية ----- */
         #resultPage {
             width: 100%;
             display: none;
             flex-direction: column;
-            align-items: center;
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.4s ease;
         }
 
-        .result-header {
-            background: linear-gradient(135deg, #003da5, #0056b3);
-            color: white;
-            width: 100%;
-            border-radius: 20px;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 61, 165, 0.2);
-            margin-bottom: 25px;
-            box-sizing: border-box;
-        }
-
-        .result-header h2 {
-            margin: 0 0 10px;
-            font-size: 1.5rem;
+        .result-title {
+            font-size: 1.4rem;
+            color: var(--mohe-blue);
             font-weight: 800;
+            text-align: center;
+            margin: -10px 0 25px 0;
         }
 
-        .result-header p {
-            margin: 0;
-            font-size: 0.95rem;
-            opacity: 0.9;
+        .info-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
         }
 
-        .student-details {
-            background: #fff;
-            width: 100%;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.04);
-            box-sizing: border-box;
-            margin-bottom: 25px;
+        .info-card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-dark);
         }
 
-        .detail-row {
+        .info-row {
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid #eee;
-            padding: 12px 0;
+            padding: 14px 20px;
+            border-bottom: 1px solid #f1f1f1;
             font-size: 0.95rem;
         }
 
-        .detail-row:last-child {
+        .info-row:last-child {
             border-bottom: none;
         }
 
-        .detail-label {
-            color: #777;
+        .info-label {
+            color: var(--text-muted);
             font-weight: 700;
+            width: 40%;
         }
 
-        .detail-value {
-            color: #111;
+        .info-value {
+            color: var(--text-dark);
             font-weight: 800;
+            width: 60%;
+            text-align: left;
         }
 
-        .acceptance-box {
-            background: #e8f5e9;
-            border: 2px solid #4caf50;
-            border-radius: 15px;
-            padding: 25px 20px;
-            text-align: center;
+        .value-highlight {
+            color: var(--mohe-blue);
+        }
+
+        .official-note {
+            background-color: #eef3fa;
+            border-right: 4px solid var(--mohe-blue);
+            padding: 15px;
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: var(--text-dark);
             width: 100%;
-            box-sizing: border-box;
-        }
-
-        .acceptance-box h3 {
-            color: #2e7d32;
-            margin: 0 0 10px;
-            font-size: 1.1rem;
-        }
-
-        .accepted-college {
-            color: #1b5e20;
-            font-size: 1.4rem;
-            font-weight: 900;
-            line-height: 1.5;
+            padding: 16px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* تنسيقات الطباعة */
+        @media print {
+            body { background: white; }
+            .btn-primary, .btn-secondary { display: none; }
+            .info-card { box-shadow: none; border: 2px solid #000; margin-bottom: 15px; }
+            .info-card-header { background-color: #ddd !important; -webkit-print-color-adjust: exact; border-bottom: 2px solid #000; }
+            .info-row { border-bottom: 1px solid #000; }
+            .logos-pill { box-shadow: none; border: 1px solid #000; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="mobile-container">
+    <div class="container">
         
-        <!-- صفحة الدخول -->
-        <div id="loginPage">
-            <!-- شكل الكبسولة للشعارات -->
+        <!-- الترويسة المشتركة -->
+        <div class="header-section">
             <div class="logos-pill">
-                <!-- أيقونة النظام السداسية مرسومة كود SVG لتطابق الأصل تماماً -->
+                <!-- أيقونة النظام السداسية -->
                 <svg width="55" height="55" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <polygon points="50,5 92,27 92,73 50,95 8,73 8,27" fill="#1f3b5c"/>
                     <path d="M50 5 L8 27 L50 49 L92 27 Z" fill="#2d527c"/>
                     <path d="M50 49 L8 27 L8 73 L50 95 Z" fill="#9e2a3b"/>
-                    <!-- تفاصيل الكتاب والدرجات الرقمية -->
                     <rect x="25" y="42" width="20" height="26" rx="2" fill="#ffffff" opacity="0.95"/>
                     <line x1="29" y1="48" x2="41" y2="48" stroke="#9e2a3b" stroke-width="2.5" stroke-linecap="round"/>
                     <line x1="29" y1="55" x2="41" y2="55" stroke="#9e2a3b" stroke-width="2.5" stroke-linecap="round"/>
                     <line x1="29" y1="62" x2="37" y2="62" stroke="#9e2a3b" stroke-width="2.5" stroke-linecap="round"/>
                 </svg>
-                <!-- شعار وزارة التعليم العالي الموجود في ملفاتك -->
-                <img src="logo.png" alt="شعار الوزارة" style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; background: #fff;">
+                <!-- شعار الوزارة -->
+                <svg width="55" height="55" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" fill="#ffffff" stroke="#c0c0c0" stroke-width="2"/>
+                    <path d="M50 20 L40 50 L60 50 Z" fill="#b32424"/>
+                    <path d="M30 40 L45 55 L20 70 Z" fill="#203d6d"/>
+                    <path d="M70 40 L55 55 L80 70 Z" fill="#203d6d"/>
+                    <circle cx="50" cy="50" r="25" fill="none" stroke="#d4af37" stroke-width="3"/>
+                    <path d="M35 50 Q50 20 65 50 Q50 80 35 50" fill="#b32424"/>
+                    <circle cx="50" cy="50" r="38" fill="none" stroke="#203d6d" stroke-width="1" stroke-dasharray="4,4"/>
+                </svg>
             </div>
-
-            <!-- أيقونة النجمة الزرقاء -->
             <svg class="star-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 0 C50 40 60 50 100 50 C60 50 50 60 50 100 C50 60 40 50 0 50 C40 50 50 40 50 0 Z" fill="#003da5"/>
+                <path d="M50 0 C50 40 60 50 100 50 C60 50 50 60 50 100 C50 60 40 50 0 50 C40 50 50 40 50 0 Z" fill="#0b4596"/>
             </svg>
+            <h1 class="page-title" id="pageTitleText">تسجيل الدخول</h1>
+        </div>
 
-            <h1 class="main-title">تسجيل الدخول</h1>
-
+        <!-- صفحة تسجيل الدخول -->
+        <div id="loginPage">
             <div class="error-msg" id="errorMsg">الرقم الامتحاني أو الرقم السري غير صحيح!</div>
 
             <div class="login-card">
                 <div class="form-group">
                     <label>الرقم الامتحاني</label>
-                    <!-- رقمك الامتحاني مكتوب بشكل افتراضي لتسهيل الدخول -->
-                    <input type="text" id="examInput" class="form-control" placeholder="أدخل الرقم الامتحاني" value="26140100037">
+                    <input type="number" id="examInput" class="form-control" placeholder="أدخل الرقم الامتحاني" value="26140100037">
                 </div>
                 <div class="form-group">
                     <label>الرقم السري</label>
@@ -296,64 +313,86 @@
                 </p>
             </div>
 
-            <!-- الزر الأزرق في الأسفل -->
-            <button class="bottom-blue-bar" onclick="checkResults()">تسجيل الدخول</button>
+            <button class="btn-primary" onclick="doLogin()">تسجيل الدخول</button>
         </div>
 
-        <!-- صفحة النتيجة (تظهر بعد الدخول) -->
+        <!-- صفحة النتيجة الرسمية -->
         <div id="resultPage">
-            <div class="result-header">
-                <h2>نتائج القبول المركزي</h2>
-                <p>للعام الدراسي 2026 - 2027</p>
-            </div>
+            <h2 class="result-title">نتائج الترشيح للقبول المركزي</h2>
 
-            <div class="student-details">
-                <div class="detail-row">
-                    <span class="detail-label">الاسم الرباعي:</span>
-                    <span class="detail-value">جعفر الصادق محمد باقر مطلك</span>
+            <!-- بطاقة بيانات الطالب -->
+            <div class="info-card">
+                <div class="info-card-header">البيانات الشخصية للطالب</div>
+                <div class="info-row">
+                    <span class="info-label">الاسم الرباعي واللقب:</span>
+                    <span class="info-value">جعفر الصادق محمد باقر مطلك</span>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">الرقم الامتحاني:</span>
-                    <span class="detail-value" style="font-family: monospace;">26140100037</span>
+                <div class="info-row">
+                    <span class="info-label">الرقم الامتحاني:</span>
+                    <span class="info-value" style="font-family: monospace; letter-spacing: 1px;">26140100037</span>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">الفرع:</span>
-                    <span class="detail-value">علمي</span>
+                <div class="info-row">
+                    <span class="info-label">المديرية / المدرسة:</span>
+                    <span class="info-value">كربلاء المقدسة - اعدادية النخبة للبنين</span>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">المعدل:</span>
-                    <span class="detail-value">91 (92 مع الإضافة)</span>
+                <div class="info-row">
+                    <span class="info-label">الفرع الدراسي:</span>
+                    <span class="info-value">علمي</span>
                 </div>
-            </div>
-
-            <!-- مربع القبول الأخضر -->
-            <div class="acceptance-box">
-                <h3>مبارك! لقد تم قبولك في:</h3>
-                <div class="accepted-college">
-                    جامعة كربلاء<br>
-                    كلية الهندسة<br>
-                    قسم الهندسة المدنية
+                <div class="info-row">
+                    <span class="info-label">المعدل التنافسي:</span>
+                    <span class="info-value">91 (ومع الإضافة 92.00)</span>
                 </div>
             </div>
 
-            <button class="bottom-blue-bar" style="background:#555; margin-top:20px;" onclick="location.reload()">تسجيل خروج</button>
+            <!-- بطاقة نتيجة القبول -->
+            <div class="info-card" style="border-color: var(--mohe-blue);">
+                <div class="info-card-header" style="background-color: #f0f4f9; color: var(--mohe-blue);">نتيجة الترشيح والقبول</div>
+                <div class="info-row">
+                    <span class="info-label">جهة القبول (الجامعة):</span>
+                    <span class="info-value value-highlight">جامعة كربلاء</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">الكلية / المعهد:</span>
+                    <span class="info-value value-highlight">كلية الهندسة</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">القسم:</span>
+                    <span class="info-value value-highlight">قسم الهندسة المدنية</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">قناة التقديم:</span>
+                    <span class="info-value">القبول المركزي (القناة العامة)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">تسلسل الرغبة:</span>
+                    <span class="info-value">الرغبة المقبولة رقم (12)</span>
+                </div>
+            </div>
+
+            <div class="official-note">
+                <strong>ملاحظة هامة:</strong> تعتبر هذه النتيجة وثيقة استدلالية لمراجعة شعبة شؤون الطلبة والتسجيل في الجامعة المقبول بها مستصحباً الوثائق المطلوبة لإتمام عملية المباشرة للعام الدراسي 2026-2027.
+            </div>
+
+            <button class="btn-primary" onclick="window.print()">طباعة إشعار القبول (PDF)</button>
+            <button class="btn-secondary" onclick="location.reload()">تسجيل خروج من النظام</button>
         </div>
 
     </div>
 
     <script>
-        function checkResults() {
+        function doLogin() {
             let exam = document.getElementById('examInput').value;
             let code = document.getElementById('codeInput').value;
             let errorMsg = document.getElementById('errorMsg');
 
-            // التحقق من بياناتك الشخصية
             if(exam === "26140100037" && code === "6475839208") {
-                // إخفاء صفحة الدخول وإظهار صفحة النتيجة
+                // إخفاء صفحة الدخول
                 document.getElementById('loginPage').style.display = "none";
+                document.getElementById('pageTitleText').style.display = "none"; // إخفاء كلمة "تسجيل الدخول" العلوية
+                // إظهار صفحة النتيجة
                 document.getElementById('resultPage').style.display = "flex";
             } else {
-                // إظهار رسالة خطأ إذا كانت الأرقام مختلفة
                 errorMsg.style.display = "block";
             }
         }
