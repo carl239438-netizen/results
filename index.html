@@ -61,12 +61,6 @@
             box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
         }
 
-        .logos-pill img {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-        }
-
         .star-icon {
             width: 40px;
             margin-bottom: 10px;
@@ -259,13 +253,23 @@
 
     <div class="mobile-container">
         
-        <!-- صفحة الدخول (تطابق الصورة تماماً) -->
+        <!-- صفحة الدخول -->
         <div id="loginPage">
             <!-- شكل الكبسولة للشعارات -->
             <div class="logos-pill">
-                <!-- استبدل مسار الصور بصور الشعارات الحقيقية إذا رفعتها على GitHub -->
-                <img src="https://i.imgur.com/kR107tM.png" alt="شعار النظام" style="background:#fff;">
-                <img src="https://i.imgur.com/vH3A7wJ.png" alt="شعار الوزارة">
+                <!-- أيقونة النظام السداسية مرسومة كود SVG لتطابق الأصل تماماً -->
+                <svg width="55" height="55" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,5 92,27 92,73 50,95 8,73 8,27" fill="#1f3b5c"/>
+                    <path d="M50 5 L8 27 L50 49 L92 27 Z" fill="#2d527c"/>
+                    <path d="M50 49 L8 27 L8 73 L50 95 Z" fill="#9e2a3b"/>
+                    <!-- تفاصيل الكتاب والدرجات الرقمية -->
+                    <rect x="25" y="42" width="20" height="26" rx="2" fill="#ffffff" opacity="0.95"/>
+                    <line x1="29" y1="48" x2="41" y2="48" stroke="#9e2a3b" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="29" y1="55" x2="41" y2="55" stroke="#9e2a3b" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="29" y1="62" x2="37" y2="62" stroke="#9e2a3b" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+                <!-- شعار وزارة التعليم العالي الموجود في ملفاتك -->
+                <img src="logo.png" alt="شعار الوزارة" style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; background: #fff;">
             </div>
 
             <!-- أيقونة النجمة الزرقاء -->
@@ -280,6 +284,7 @@
             <div class="login-card">
                 <div class="form-group">
                     <label>الرقم الامتحاني</label>
+                    <!-- رقمك الامتحاني مكتوب بشكل افتراضي لتسهيل الدخول -->
                     <input type="text" id="examInput" class="form-control" placeholder="أدخل الرقم الامتحاني" value="26140100037">
                 </div>
                 <div class="form-group">
