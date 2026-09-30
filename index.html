@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة القبول المركزي - نتائج الترشيح</title>
-    <!-- خط تجوال المعتمد في المنصات الحكومية -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -40,7 +39,6 @@
             box-sizing: border-box;
         }
 
-        /* ----- اللوجو والترويسة المشتركة ----- */
         .header-section {
             display: flex;
             flex-direction: column;
@@ -72,7 +70,6 @@
             text-align: center;
         }
 
-        /* ----- صفحة الدخول ----- */
         #loginPage {
             width: 100%;
             display: flex;
@@ -159,7 +156,6 @@
             display: none;
         }
 
-        /* ----- صفحة النتائج الرسمية ----- */
         #resultPage {
             width: 100%;
             display: none;
@@ -250,7 +246,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* تنسيقات الطباعة */
         @media print {
             body { background: white; }
             .btn-primary, .btn-secondary { display: none; }
@@ -265,10 +260,8 @@
 
     <div class="container">
         
-        <!-- الترويسة المشتركة -->
         <div class="header-section">
             <div class="logos-pill">
-                <!-- أيقونة النظام السداسية -->
                 <svg width="55" height="55" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <polygon points="50,5 92,27 92,73 50,95 8,73 8,27" fill="#1f3b5c"/>
                     <path d="M50 5 L8 27 L50 49 L92 27 Z" fill="#2d527c"/>
@@ -278,7 +271,6 @@
                     <line x1="29" y1="55" x2="41" y2="55" stroke="#9e2a3b" stroke-width="2.5" stroke-linecap="round"/>
                     <line x1="29" y1="62" x2="37" y2="62" stroke="#9e2a3b" stroke-width="2.5" stroke-linecap="round"/>
                 </svg>
-                <!-- شعار الوزارة -->
                 <svg width="55" height="55" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="50" cy="50" r="48" fill="#ffffff" stroke="#c0c0c0" stroke-width="2"/>
                     <path d="M50 20 L40 50 L60 50 Z" fill="#b32424"/>
@@ -295,7 +287,6 @@
             <h1 class="page-title" id="pageTitleText">تسجيل الدخول</h1>
         </div>
 
-        <!-- صفحة تسجيل الدخول -->
         <div id="loginPage">
             <div class="error-msg" id="errorMsg">الرقم الامتحاني أو الرقم السري غير صحيح!</div>
 
@@ -316,11 +307,9 @@
             <button class="btn-primary" onclick="doLogin()">تسجيل الدخول</button>
         </div>
 
-        <!-- صفحة النتيجة الرسمية -->
         <div id="resultPage">
             <h2 class="result-title">نتائج الترشيح للقبول المركزي</h2>
 
-            <!-- بطاقة بيانات الطالب -->
             <div class="info-card">
                 <div class="info-card-header">البيانات الشخصية للطالب</div>
                 <div class="info-row">
@@ -341,11 +330,10 @@
                 </div>
                 <div class="info-row">
                     <span class="info-label">المعدل التنافسي:</span>
-                    <span class="info-value">91 (ومع الإضافة 92.00)</span>
+                    <span class="info-value">91.43 (ومع الإضافة 92.43)</span>
                 </div>
             </div>
 
-            <!-- بطاقة نتيجة القبول -->
             <div class="info-card" style="border-color: var(--mohe-blue);">
                 <div class="info-card-header" style="background-color: #f0f4f9; color: var(--mohe-blue);">نتيجة الترشيح والقبول</div>
                 <div class="info-row">
@@ -387,10 +375,8 @@
             let errorMsg = document.getElementById('errorMsg');
 
             if(exam === "26140100037" && code === "6475839208") {
-                // إخفاء صفحة الدخول
                 document.getElementById('loginPage').style.display = "none";
-                document.getElementById('pageTitleText').style.display = "none"; // إخفاء كلمة "تسجيل الدخول" العلوية
-                // إظهار صفحة النتيجة
+                document.getElementById('pageTitleText').style.display = "none";
                 document.getElementById('resultPage').style.display = "flex";
             } else {
                 errorMsg.style.display = "block";
