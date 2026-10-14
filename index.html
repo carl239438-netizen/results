@@ -180,6 +180,7 @@
             overflow: hidden;
         }
 
+        /* تعديل الهيدر ليحتوي على زر الإخفاء */
         .info-card-header {
             background-color: #f8f9fa;
             border-bottom: 1px solid var(--border-color);
@@ -187,6 +188,27 @@
             font-size: 1rem;
             font-weight: 800;
             color: var(--text-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* تنسيق زر الخصوصية */
+        .privacy-btn {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+        .privacy-btn:hover {
+            background: #eef3fa;
+            color: var(--mohe-blue);
         }
 
         .info-row {
@@ -212,6 +234,14 @@
             font-weight: 800;
             width: 60%;
             text-align: left;
+            transition: filter 0.3s ease; /* حركة ناعمة للتغويش */
+        }
+
+        /* كلاس التغويش (Blur) الذي سيتم تفعيله بالـ JavaScript */
+        .blurred-text {
+            filter: blur(5px);
+            user-select: none;
+            opacity: 0.8;
         }
 
         .value-highlight {
@@ -246,9 +276,10 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* عند الطباعة أو تحويلها لـ PDF يتم إخفاء زر الخصوصية */
         @media print {
             body { background: white; }
-            .btn-primary, .btn-secondary { display: none; }
+            .btn-primary, .btn-secondary, .privacy-btn { display: none !important; }
             .info-card { box-shadow: none; border: 2px solid #000; margin-bottom: 15px; }
             .info-card-header { background-color: #ddd !important; -webkit-print-color-adjust: exact; border-bottom: 2px solid #000; }
             .info-row { border-bottom: 1px solid #000; }
@@ -311,18 +342,24 @@
             <h2 class="result-title">نتائج الترشيح للقبول المركزي</h2>
 
             <div class="info-card">
-                <div class="info-card-header">البيانات الشخصية للطالب</div>
+                <!-- إضافة زر الخصوصية هنا في الهيدر -->
+                <div class="info-card-header">
+                    <span>البيانات الشخصية للطالب</span>
+                    <button class="privacy-btn" id="privacyBtn" onclick="togglePrivacy()">إخفاء 👁️</button>
+                </div>
                 <div class="info-row">
                     <span class="info-label">الاسم الرباعي واللقب:</span>
                     <span class="info-value">جعفر الصادق محمد باقر مطلك</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">الرقم الامتحاني:</span>
-                    <span class="info-value" style="font-family: monospace; letter-spacing: 1px;">26140100037</span>
+                    <!-- أضفت id هنا للتحكم بالتغويش -->
+                    <span class="info-value" id="examVal" style="font-family: monospace; letter-spacing: 1px;">26140100037</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">المديرية / المدرسة:</span>
-                    <span class="info-value">كربلاء المقدسة - اعدادية النخبة للبنين</span>
+                    <!-- أضفت id هنا للتحكم بالتغويش -->
+                    <span class="info-value" id="schoolVal">كربلاء المقدسة - اعدادية النخبة للبنين</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">الفرع الدراسي:</span>
@@ -380,6 +417,26 @@
                 document.getElementById('resultPage').style.display = "flex";
             } else {
                 errorMsg.style.display = "block";
+            }
+        }
+
+        // الدالة المسؤولة عن تغويش البيانات الحساسة
+        function togglePrivacy() {
+            let examField = document.getElementById('examVal');
+            let schoolField = document.getElementById('schoolVal');
+            let btn = document.getElementById('privacyBtn');
+
+            // تبديل كلاس التغويش
+            examField.classList.toggle('blurred-text');
+            schoolField.classList.toggle('blurred-text');
+
+            // تغيير نص الزر حسب الحالة
+            if(examField.classList.contains('blurred-text')) {
+                btn.innerHTML = "إظهار 👁️‍🗨️";
+                btn.style.color = "#d32f2f"; // تغيير لون الزر للاحمر الفاتح للتنبيه
+            } else {
+                btn.innerHTML = "إخفاء 👁️";
+                btn.style.color = "var(--text-muted)";
             }
         }
     </script>
