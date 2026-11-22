@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>بوابة الطالب الجامعية</title>
+    <title>بوابة الطالب - هندسة الكهرباء والإلكترونيك</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -36,7 +36,6 @@
             color: var(--text-dark);
         }
 
-        /* إطار التطبيق المتجاوب للموبايل */
         .app-shell {
             width: 100%;
             max-width: 460px;
@@ -49,7 +48,7 @@
             overflow-x: hidden;
         }
 
-        /* الهيدر التركوازي الشبكي نفس الصورة */
+        /* الهيدر التركوازي الشبكي */
         .top-header {
             background-color: var(--teal-main);
             background-image: 
@@ -122,7 +121,6 @@
             border: 2px solid var(--teal-main);
         }
 
-        /* مساحة المحتوى */
         .main-content {
             padding: 18px 16px 100px;
             flex: 1;
@@ -142,7 +140,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* البانر الأخضر الليموني */
         .status-banner {
             background-color: var(--lime-banner);
             color: var(--lime-text);
@@ -179,7 +176,6 @@
             flex-shrink: 0;
         }
 
-        /* العناوين والبطاقات */
         .section-head {
             display: flex;
             justify-content: space-between;
@@ -207,16 +203,27 @@
             margin-bottom: 14px;
         }
 
-        .white-card {
+        .off-day-card {
             background-color: var(--white);
+            border: 1.5px dashed var(--teal-main);
             border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            border: 1px solid #e9eef0;
+            padding: 28px 16px;
+            text-align: center;
+            color: var(--teal-dark);
         }
 
-        /* جدول المعلومات الشخصية */
+        .off-day-card h4 {
+            margin: 0 0 6px 0;
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .off-day-card p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
         .info-item {
             display: flex;
             justify-content: space-between;
@@ -225,27 +232,11 @@
             font-size: 0.9rem;
         }
 
-        .info-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
+        .info-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .info-item:first-child { padding-top: 0; }
+        .info-label { color: var(--text-muted); font-weight: 500; }
+        .info-val { font-weight: 800; color: var(--text-dark); text-align: left; }
 
-        .info-item:first-child {
-            padding-top: 0;
-        }
-
-        .info-label {
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .info-val {
-            font-weight: 800;
-            color: var(--text-dark);
-            text-align: left;
-        }
-
-        /* بطاقات الإحصائيات السريعة */
         .quick-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -273,7 +264,6 @@
             font-weight: 700;
         }
 
-        /* بطاقات الدرجات (الكوز والمد) */
         .grade-card {
             background: var(--white);
             border-radius: 14px;
@@ -289,10 +279,7 @@
             margin-bottom: 10px;
         }
 
-        .subject-name {
-            font-weight: 800;
-            font-size: 0.95rem;
-        }
+        .subject-name { font-weight: 800; font-size: 0.92rem; }
 
         .grade-badge {
             background: var(--teal-soft);
@@ -300,12 +287,8 @@
             padding: 4px 12px;
             border-radius: 20px;
             font-weight: 800;
-            font-size: 0.85rem;
-        }
-
-        .grade-badge.low {
-            background: #fee2e2;
-            color: #b91c1c;
+            font-size: 0.82rem;
+            white-space: nowrap;
         }
 
         .progress-track {
@@ -330,7 +313,6 @@
             justify-content: space-between;
         }
 
-        /* شريط أيام الجدول الأسبوعي */
         .days-strip {
             display: flex;
             justify-content: space-between;
@@ -354,10 +336,13 @@
             transition: 0.2s;
         }
 
-        .day-btn strong {
+        .day-btn strong { display: block; font-size: 0.82rem; font-weight: 800; }
+
+        .day-btn small {
             display: block;
-            font-size: 0.82rem;
-            font-weight: 800;
+            font-size: 0.65rem;
+            margin-top: 2px;
+            opacity: 0.8;
         }
 
         .day-btn.active {
@@ -378,17 +363,8 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.03);
         }
 
-        .lecture-info h4 {
-            margin: 0 0 4px 0;
-            font-size: 0.95rem;
-            font-weight: 800;
-        }
-
-        .lecture-info p {
-            margin: 0;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
+        .lecture-info h4 { margin: 0 0 4px 0; font-size: 0.92rem; font-weight: 800; }
+        .lecture-info p { margin: 0; font-size: 0.78rem; color: var(--text-muted); }
 
         .lecture-time {
             background: var(--card-bg);
@@ -398,21 +374,18 @@
             font-size: 0.78rem;
             font-weight: 800;
             text-align: center;
+            white-space: nowrap;
         }
 
-        /* بطاقات التبليغات */
         .notice-card {
             background: var(--white);
             border-radius: 14px;
             padding: 15px;
             margin-bottom: 12px;
             border: 1px solid #e9eef0;
-            position: relative;
         }
 
-        .notice-card.unread {
-            border-right: 4px solid var(--danger);
-        }
+        .notice-card.unread { border-right: 4px solid var(--danger); }
 
         .notice-header {
             display: flex;
@@ -421,25 +394,11 @@
             margin-bottom: 6px;
         }
 
-        .notice-title {
-            font-weight: 800;
-            font-size: 0.92rem;
-            color: var(--text-dark);
-        }
+        .notice-title { font-weight: 800; font-size: 0.92rem; color: var(--text-dark); }
+        .notice-date { font-size: 0.72rem; color: var(--text-muted); }
+        .notice-body { margin: 0; font-size: 0.83rem; color: #475569; line-height: 1.6; }
 
-        .notice-date {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-        }
-
-        .notice-body {
-            margin: 0;
-            font-size: 0.83rem;
-            color: #475569;
-            line-height: 1.6;
-        }
-
-        /* شريط التنقل السفلي (بنفس فكرة الصورة) */
+        /* شريط التنقل السفلي */
         .bottom-nav-wrapper {
             position: fixed;
             bottom: 12px;
@@ -476,11 +435,7 @@
             transition: all 0.25s ease;
         }
 
-        .nav-item svg {
-            width: 22px;
-            height: 22px;
-            flex-shrink: 0;
-        }
+        .nav-item svg { width: 22px; height: 22px; flex-shrink: 0; }
 
         .nav-item span {
             display: none;
@@ -489,16 +444,13 @@
             white-space: nowrap;
         }
 
-        /* التبويب النشط يتحول إلى كبسولة تركوازية */
         .nav-item.active {
             background-color: var(--teal-soft);
             color: var(--teal-dark);
             padding: 10px 14px;
         }
 
-        .nav-item.active span {
-            display: inline-block;
-        }
+        .nav-item.active span { display: inline-block; }
     </style>
 </head>
 <body>
@@ -510,8 +462,7 @@
         <div class="header-right">
             <div class="app-logo-box">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                 </svg>
             </div>
             <div>
@@ -520,7 +471,6 @@
             </div>
         </div>
 
-        <!-- زر الجرس ينقلك مباشرة لصفحة التبليغات -->
         <button class="bell-btn" onclick="openTab('notices', document.getElementById('nav-notices'), 'تبليغات الجامعة')">
             <span class="bell-badge">3</span>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -533,12 +483,12 @@
     <!-- المحتوى الرئيسي -->
     <main class="main-content">
 
-        <!-- 1. صفحة المعلومات الشخصية -->
+        <!-- 1. معلومات شخصية -->
         <section id="profile" class="tab-page active">
             <div class="status-banner">
                 <div>
                     <h4>العام الدراسي 2026 - 2027</h4>
-                    <p>الحالة الدراسية: مستمر بالدوام (الفصل الدراسي الأول)</p>
+                    <p>الحالة الدراسية: مستمر بالدوام (الكورس الأول - مسار بولونيا)</p>
                 </div>
                 <div class="banner-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -548,76 +498,64 @@
             </div>
 
             <div class="quick-grid">
-                <div class="quick-box">
-                    <strong>6</strong>
-                    <span>المواد الدراسية</span>
-                </div>
-                <div class="quick-box">
-                    <strong>الأولى</strong>
-                    <span>المرحلة</span>
-                </div>
-                <div class="quick-box">
-                    <strong>صباحي</strong>
-                    <span>الدراسة</span>
-                </div>
+                <div class="quick-box"><strong>9</strong><span>مواد الكورس الأول</span></div>
+                <div class="quick-box"><strong>الأولى</strong><span>المرحلة</span></div>
+                <div class="quick-box"><strong>صباحي</strong><span>الدراسة</span></div>
             </div>
 
-            <div class="section-head">
-                <h3>البطاقة التعريفية للطالب</h3>
-            </div>
-            <!-- عدّل معلوماتك الشخصية هنا -->
+            <div class="section-head"><h3>البطاقة التعريفية للطالب</h3></div>
             <div class="soft-card">
-                <div class="info-item">
-                    <span class="info-label">الاسم الكامل</span>
-                    <span class="info-val">جعفر الصادق محمد باقر</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">الجامعة</span>
-                    <span class="info-val">جامعة كربلاء</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">الكلية</span>
-                    <span class="info-val">كلية الهندسة</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">القسم</span>
-                    <span class="info-val">الهندسة المدنية</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">الرقم الجامعي</span>
-                    <span class="info-val" style="font-family: monospace;">26140100037</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">السكن</span>
-                    <span class="info-val">كربلاء - حي الحسين</span>
-                </div>
+                <div class="info-item"><span class="info-label">الاسم الكامل</span><span class="info-val">جعفر الصادق محمد باقر</span></div>
+                <div class="info-item"><span class="info-label">الجامعة</span><span class="info-val">جامعة كربلاء</span></div>
+                <div class="info-item"><span class="info-label">الكلية</span><span class="info-val">كلية الهندسة</span></div>
+                <div class="info-item"><span class="info-label">القسم</span><span class="info-val">هندسة الكهرباء والإلكترونيك</span></div>
+                <div class="info-item"><span class="info-label">الفصل الدراسي</span><span class="info-val">الكورس الأول (2026-2027)</span></div>
+                <div class="info-item"><span class="info-label">الرقم الجامعي</span><span class="info-val" style="font-family: monospace;">26140100037</span></div>
+                <div class="info-item"><span class="info-label">السكن</span><span class="info-val">كربلاء - حي الحسين</span></div>
             </div>
         </section>
 
-        <!-- 2. صفحة درجات الكوز -->
+        <!-- 2. درجات الكوز (مواد الكورس الأول) -->
         <section id="quizzes" class="tab-page">
             <div class="section-head">
-                <h3>درجات الامتحانات اليومية (الكوز)</h3>
+                <h3>درجات الكوز - الكورس الأول</h3>
                 <span class="section-tag">من 10 درجات</span>
             </div>
 
-            <!-- عدّل درجات الكوز هنا -->
             <div class="grade-card">
                 <div class="grade-top">
-                    <span class="subject-name">الرياضيات الهندسية</span>
+                    <span class="subject-name">أسس الهندسة الكهربائية I (DC)</span>
                     <span class="grade-badge">9 / 10</span>
                 </div>
                 <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
-                <div class="grade-meta"><span>كوز 1: 9/10</span><span>ممتاز</span></div>
+                <div class="grade-meta"><span>كوز 1: دوائر التيار المستمر</span><span>ممتاز</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الرياضيات الهندسية I</span>
+                    <span class="grade-badge">9.5 / 10</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 95%;"></div></div>
+                <div class="grade-meta"><span>كوز 1: الغايات والمشتقات</span><span>ممتاز</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الفيزياء الإلكترونية</span>
+                    <span class="grade-badge">8.5 / 10</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
+                <div class="grade-meta"><span>كوز 1: أشباه الموصلات</span><span>جيد جداً</span></div>
             </div>
 
             <div class="grade-card">
                 <div class="grade-top">
                     <span class="subject-name">الميكانيك الهندسي</span>
-                    <span class="grade-badge">8.5 / 10</span>
+                    <span class="grade-badge">8 / 10</span>
                 </div>
-                <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
-                <div class="grade-meta"><span>كوز 1: 8.5/10</span><span>جيد جداً</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+                <div class="grade-meta"><span>كوز 1: محصلة القوى</span><span>جيد جداً</span></div>
             </div>
 
             <div class="grade-card">
@@ -626,30 +564,56 @@
                     <span class="grade-badge">10 / 10</span>
                 </div>
                 <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
-                <div class="grade-meta"><span>لوحة رقم 1 و 2</span><span>درجة كاملة</span></div>
+                <div class="grade-meta"><span>اللوحة الأولى والثانية</span><span>درجة كاملة</span></div>
             </div>
 
             <div class="grade-card">
                 <div class="grade-top">
                     <span class="subject-name">مبادئ الحاسوب والبرمجة</span>
+                    <span class="grade-badge">9 / 10</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+                <div class="grade-meta"><span>كوز المختبر الأول</span><span>ممتاز</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">اللغة الإنكليزية</span>
+                    <span class="grade-badge">9 / 10</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+                <div class="grade-meta"><span>كوز 1</span><span>ممتاز</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">جرائم حزب البعث</span>
                     <span class="grade-badge">9.5 / 10</span>
                 </div>
                 <div class="progress-track"><div class="progress-fill" style="width: 95%;"></div></div>
-                <div class="grade-meta"><span>كوز عملي</span><span>ممتاز</span></div>
+                <div class="grade-meta"><span>كوز 1</span><span>ممتاز</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">التربية الإسلامية</span>
+                    <span class="grade-badge">10 / 10</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+                <div class="grade-meta"><span>كوز 1</span><span>درجة كاملة</span></div>
             </div>
         </section>
 
-        <!-- 3. صفحة درجات المد -->
+        <!-- 3. درجات المد (مواد الكورس الأول) -->
         <section id="midterms" class="tab-page">
             <div class="section-head">
-                <h3>درجات امتحانات الفصل (المد)</h3>
+                <h3>درجات المد - الكورس الأول</h3>
                 <span class="section-tag">من 30 درجة</span>
             </div>
 
-            <!-- عدّل درجات المد هنا -->
             <div class="grade-card">
                 <div class="grade-top">
-                    <span class="subject-name">الرياضيات الهندسية</span>
+                    <span class="subject-name">أسس الهندسة الكهربائية I (DC)</span>
                     <span class="grade-badge">27 / 30</span>
                 </div>
                 <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
@@ -658,7 +622,16 @@
 
             <div class="grade-card">
                 <div class="grade-top">
-                    <span class="subject-name">الميكانيك الهندسي</span>
+                    <span class="subject-name">الرياضيات الهندسية I</span>
+                    <span class="grade-badge">28 / 30</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 93%;"></div></div>
+                <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: امتياز</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الفيزياء الإلكترونية</span>
                     <span class="grade-badge">25 / 30</span>
                 </div>
                 <div class="progress-track"><div class="progress-fill" style="width: 83%;"></div></div>
@@ -667,7 +640,7 @@
 
             <div class="grade-card">
                 <div class="grade-top">
-                    <span class="subject-name">الفيزياء الهندسية</span>
+                    <span class="subject-name">الميكانيك الهندسي</span>
                     <span class="grade-badge">24 / 30</span>
                 </div>
                 <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
@@ -676,19 +649,55 @@
 
             <div class="grade-card">
                 <div class="grade-top">
-                    <span class="subject-name">الجيولوجيا الهندسية</span>
+                    <span class="subject-name">الرسم الهندسي</span>
+                    <span class="grade-badge">29 / 30</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 96%;"></div></div>
+                <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: امتياز</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">مبادئ الحاسوب والبرمجة</span>
+                    <span class="grade-badge">27 / 30</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+                <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: امتياز</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">اللغة الإنكليزية</span>
+                    <span class="grade-badge">26 / 30</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 87%;"></div></div>
+                <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: جيد جداً</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">جرائم حزب البعث</span>
                     <span class="grade-badge">28 / 30</span>
                 </div>
                 <div class="progress-track"><div class="progress-fill" style="width: 93%;"></div></div>
                 <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: امتياز</span></div>
             </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">التربية الإسلامية</span>
+                    <span class="grade-badge">29 / 30</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 97%;"></div></div>
+                <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: امتياز</span></div>
+            </div>
         </section>
 
-        <!-- 4. صفحة الجدول الأسبوعي -->
+        <!-- 4. الجدول الأسبوعي -->
         <section id="schedule" class="tab-page">
             <div class="section-head">
-                <h3>جدول المحاضرات الأسبوعي</h3>
-                <span class="section-tag">اختر اليوم</span>
+                <h3>جدول الكورس الأول الأسبوعي</h3>
+                <span class="section-tag">الخميس أوف</span>
             </div>
 
             <div class="days-strip">
@@ -696,49 +705,47 @@
                 <button class="day-btn" onclick="showDay('mon', this)"><strong>الاثنين</strong></button>
                 <button class="day-btn" onclick="showDay('tue', this)"><strong>الثلاثاء</strong></button>
                 <button class="day-btn" onclick="showDay('wed', this)"><strong>الأربعاء</strong></button>
-                <button class="day-btn" onclick="showDay('thu', this)"><strong>الخميس</strong></button>
+                <button class="day-btn" onclick="showDay('thu', this)"><strong>الخميس</strong><small>أوف</small></button>
             </div>
 
-            <!-- هنا تتغير المحاضرات حسب اليوم المختار -->
             <div id="scheduleList"></div>
         </section>
 
-        <!-- 5. صفحة تبليغات الجامعة -->
+        <!-- 5. تبليغات الجامعة -->
         <section id="notices" class="tab-page">
             <div class="section-head">
-                <h3>تبليغات الجامعة والقسم</h3>
+                <h3>تبليغات قسم الكهرباء والإلكترونيك</h3>
                 <span class="section-tag">3 تبليغات</span>
             </div>
 
-            <!-- عدّل التبليغات هنا -->
             <div class="notice-card unread">
                 <div class="notice-header">
-                    <span class="notice-title">موعد كوز الميكانيك الهندسي</span>
+                    <span class="notice-title">تقرير مختبر أسس الكهرباء</span>
                     <span class="notice-date">اليوم</span>
                 </div>
-                <p class="notice-body">على جميع طلبة المرحلة الأولى الاستعداد لامتحان الكوز الثاني يوم الثلاثاء القادم الساعة 10:00 صباحاً في قاعة 2.</p>
+                <p class="notice-body">على جميع طلبة المرحلة الأولى تسليم تقرير التجربة الثانية (قانون أوم وربط المقاومات) قبل دخول المختبر يوم الاثنين.</p>
             </div>
 
             <div class="notice-card unread">
                 <div class="notice-header">
-                    <span class="notice-title">تسليم لوحات الرسم الهندسي</span>
+                    <span class="notice-title">موعد كوز الفيزياء الإلكترونية</span>
                     <span class="notice-date">أمس</span>
                 </div>
-                <p class="notice-body">آخر موعد لتسليم لوحة المساقط الثالثة هو يوم الخميس قبل الساعة 12 ظهراً، ولن يُقبل أي تأخير.</p>
+                <p class="notice-body">تقرر إجراء امتحان الكوز الأول لمادة الفيزياء الإلكترونية يوم الثلاثاء الساعة 10:30 صباحاً في القاعة الأولى.</p>
             </div>
 
             <div class="notice-card">
                 <div class="notice-header">
-                    <span class="notice-title">تحديث جدول المختبرات</span>
+                    <span class="notice-title">أدوات الرسم الهندسي</span>
                     <span class="notice-date">منذ 3 أيام</span>
                 </div>
-                <p class="notice-body">تم نقل مختبر الحاسوب لمجموعة (A) إلى القاعة الجديدة في الطابق الثاني من بناية القسم.</p>
+                <p class="notice-body">يرجى جلب لوحة الرسم (A3) ومسطرة الـ T-Square والمثلثات في محاضرة المرسم ليوم الأربعاء.</p>
             </div>
         </section>
 
     </main>
 
-    <!-- شريط التنقل السفلي (5 خيارات) -->
+    <!-- شريط التنقل السفلي -->
     <div class="bottom-nav-wrapper">
         <nav class="bottom-nav">
             <!-- 1. معلومات شخصية -->
@@ -795,7 +802,6 @@
 </div>
 
 <script>
-    // دالة التنقل بين الصفحات الـ 5
     function openTab(tabId, btn, titleText) {
         document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -806,28 +812,27 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // بيانات الجدول الأسبوعي - عدّلها حسب جدولك الحقيقي
+    // جدول مواد الكورس الأول (الأحد - الأربعاء، والخميس أوف)
     const weeklySchedule = {
         sun: [
-            { subject: "الرياضيات الهندسية", details: "قاعة 1 • د. أحمد", time: "08:30 ص" },
-            { subject: "الميكانيك الهندسي", details: "قاعة 3 • د. علي", time: "10:30 ص" }
+            { subject: "أسس الهندسة الكهربائية I", details: "نظري • القاعة 1", time: "08:30 ص" },
+            { subject: "الرياضيات الهندسية I", details: "نظري • القاعة 1", time: "10:30 ص" },
+            { subject: "جرائم حزب البعث", details: "نظري • القاعة 4", time: "12:30 م" }
         ],
         mon: [
-            { subject: "الرسم الهندسي (عملي)", details: "مرسم 2 • م.م حسن", time: "08:30 ص" },
-            { subject: "مبادئ الحاسوب", details: "مختبر الحاسوب • م. زينب", time: "11:00 ص" }
+            { subject: "مختبر أسس الكهرباء", details: "عملي • مختبر الدوائر", time: "08:30 ص" },
+            { subject: "الميكانيك الهندسي", details: "نظري • القاعة 2", time: "10:30 ص" }
         ],
         tue: [
-            { subject: "الفيزياء الهندسية", details: "قاعة 2 • د. كريم", time: "09:00 ص" },
-            { subject: "حقوق الإنسان", details: "قاعة 4 • د. محمد", time: "11:30 ص" }
+            { subject: "الفيزياء الإلكترونية", details: "نظري • القاعة 1", time: "08:30 ص" },
+            { subject: "مبادئ الحاسوب والبرمجة", details: "عملي • مختبر الحاسوب", time: "10:30 ص" },
+            { subject: "التربية الإسلامية", details: "نظري • القاعة 3", time: "12:30 م" }
         ],
         wed: [
-            { subject: "الجيولوجيا الهندسية", details: "قاعة 1 • د. سارة", time: "08:30 ص" },
-            { subject: "الرياضيات الهندسية", details: "قاعة 1 • د. أحمد", time: "10:30 ص" }
+            { subject: "الرسم الهندسي", details: "عملي • المرسم الهندسي", time: "08:30 ص" },
+            { subject: "اللغة الإنكليزية", details: "نظري • القاعة 3", time: "11:30 ص" }
         ],
-        thu: [
-            { subject: "الميكانيك الهندسي", details: "قاعة 3 • د. علي", time: "09:00 ص" },
-            { subject: "اللغة الإنكليزية", details: "قاعة 2 • أ. حسين", time: "11:00 ص" }
-        ]
+        thu: [] // الخميس أوف - ما بي دوام
     };
 
     function showDay(dayKey, btn) {
@@ -838,7 +843,12 @@
         const lectures = weeklySchedule[dayKey] || [];
 
         if (lectures.length === 0) {
-            list.innerHTML = '<div class="soft-card" style="text-align:center; color:#64748b;">لا توجد محاضرات في هذا اليوم</div>';
+            list.innerHTML = `
+                <div class="off-day-card">
+                    <h4>يوم أوف 🎉</h4>
+                    <p>لا توجد محاضرات أو دوام في هذا اليوم.</p>
+                </div>
+            `;
             return;
         }
 
@@ -853,7 +863,6 @@
         `).join('');
     }
 
-    // عرض جدول يوم الأحد افتراضياً عند فتح الموقع
     showDay('sun', document.querySelector('.day-btn'));
 </script>
 
