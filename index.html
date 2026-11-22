@@ -2,430 +2,860 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>استمارة تسجيل البيانات</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بوابة الطالب الجامعية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0d9488;
-            --primary-hover: #0f766e;
-            --btn-secondary: #0284c7;
-            --btn-secondary-hover: #0369a1;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --border-color: #cbd5e1;
-            --text-main: #1e293b;
-            --text-label: #334155;
-            --bg-page: #e2e8f0;
+            --teal-main: #1d8a93;
+            --teal-dark: #146c73;
+            --teal-soft: #b2e2e6;
+            --lime-banner: #bce468;
+            --lime-text: #2c4a0d;
+            --bg-app: #f6f8f9;
+            --card-bg: #eef2f3;
+            --white: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: var(--bg-page);
-            background-image: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
-            color: var(--text-main);
+            background-color: #dbe4e8;
             margin: 0;
-            padding: 30px 15px;
+            padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            -webkit-print-color-adjust: exact; /* لضمان طباعة الشعار المائي */
-            print-color-adjust: exact;
+            color: var(--text-dark);
         }
 
-        /* الاستمارة وإضافة العلامة المائية */
-        .form-card {
-            background-color: var(--card-bg);
+        /* إطار التطبيق المتجاوب للموبايل */
+        .app-shell {
             width: 100%;
-            max-width: 1100px;
-            border-radius: 12px;
-            padding: 35px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box;
-            position: relative; /* ضروري للعلامة المائية */
-            overflow: hidden;
-        }
-
-        /* كود العلامة المائية (شعار الوزارة) */
-        .form-card::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px; /* حجم الشعار */
-            height: 400px;
-            background-image: url('logo.png'); /* 👈 اسم صورة الشعار المرفوعة في GitHub */
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            opacity: 0.06; /* الشفافية: 0.06 يعني باهت جداً مثل الورق الرسمي */
-            z-index: 0;
-            pointer-events: none; /* يمنع إعاقة الضغط على الحقول */
-        }
-
-        /* رفع محتوى الاستمارة فوق العلامة المائية */
-        #registrationForm, .header-title, .photo-upload-container, .terms-box {
+            max-width: 460px;
+            min-height: 100vh;
+            background-color: var(--bg-app);
             position: relative;
-            z-index: 1;
-        }
-
-        .header-title {
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        /* مساحة الصورة */
-        .photo-upload-container {
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.12);
+            overflow-x: hidden;
         }
 
-        .photo-preview {
-            width: 110px;
-            height: 130px;
-            border: 2px dashed #94a3b8;
-            border-radius: 6px;
+        /* الهيدر التركوازي الشبكي نفس الصورة */
+        .top-header {
+            background-color: var(--teal-main);
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 28px 28px;
+            padding: 26px 20px 30px;
+            color: var(--white);
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            color: #64748b;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background-color: #f8fafc;
-            overflow: hidden;
-            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
-        .file-btn {
-            background-color: #16a34a;
-            color: white;
-            padding: 6px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.85rem;
-            transition: 0.2s;
-        }
-
-        .file-btn:hover { background-color: #15803d; }
-        input[type="file"] { display: none; }
-
-        /* الشبكة وتوزيع الحقول */
-        .grid-row {
-            display: grid;
-            gap: 15px;
-            margin-bottom: 18px;
-        }
-
-        .cols-5 { grid-template-columns: repeat(5, 1fr); }
-        .cols-3 { grid-template-columns: repeat(3, 1fr); }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: var(--text-label);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 9px 12px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            background-color: #ffffff;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 0.95rem;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus { border-color: var(--primary-color); }
-
-        /* التعهدات */
-        .terms-box {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 20px;
-            border-radius: 6px;
-            margin-top: 30px;
-            margin-bottom: 25px;
-        }
-
-        .checkbox-group {
+        .header-right {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            color: #475569;
-            font-weight: 700;
         }
 
-        .checkbox-group:last-child { margin-bottom: 0; }
-        .checkbox-group input { width: 18px; height: 18px; cursor: pointer; }
-
-        /* الأزرار */
-        .actions-group {
+        .app-logo-box {
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
             display: flex;
-            gap: 15px;
+            align-items: center;
             justify-content: center;
         }
 
-        .btn {
-            font-family: 'Tajawal', sans-serif;
-            font-size: 1.1rem;
+        .greeting-small {
+            font-size: 0.82rem;
+            opacity: 0.9;
+            margin: 0 0 3px 0;
+            font-weight: 500;
+        }
+
+        .greeting-title {
+            font-size: 1.35rem;
             font-weight: 800;
-            padding: 12px 40px;
-            border-radius: 6px;
+            margin: 0;
+        }
+
+        .bell-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
             border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            color: var(--white);
+        }
+
+        .bell-badge {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            background-color: var(--danger);
+            color: white;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 12px;
+            border: 2px solid var(--teal-main);
+        }
+
+        /* مساحة المحتوى */
+        .main-content {
+            padding: 18px 16px 100px;
+            flex: 1;
+        }
+
+        .tab-page {
+            display: none;
+            animation: fadeUp 0.25s ease;
+        }
+
+        .tab-page.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* البانر الأخضر الليموني */
+        .status-banner {
+            background-color: var(--lime-banner);
+            color: var(--lime-text);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .status-banner h4 {
+            margin: 0 0 4px 0;
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+
+        .status-banner p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .banner-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(44, 74, 13, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* العناوين والبطاقات */
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 0 12px 0;
+        }
+
+        .section-head h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .section-tag {
+            font-size: 0.78rem;
+            color: var(--teal-main);
+            font-weight: 700;
+        }
+
+        .soft-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 14px;
+        }
+
+        .white-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #e9eef0;
+        }
+
+        /* جدول المعلومات الشخصية */
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 11px 0;
+            border-bottom: 1px solid #e1e8ea;
+            font-size: 0.9rem;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-item:first-child {
+            padding-top: 0;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .info-val {
+            font-weight: 800;
+            color: var(--text-dark);
+            text-align: left;
+        }
+
+        /* بطاقات الإحصائيات السريعة */
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .quick-box {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 14px 8px;
+            text-align: center;
+        }
+
+        .quick-box strong {
+            display: block;
+            font-size: 1.15rem;
+            color: var(--teal-dark);
+            font-weight: 800;
+        }
+
+        .quick-box span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        /* بطاقات الدرجات (الكوز والمد) */
+        .grade-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border: 1px solid #e9eef0;
+        }
+
+        .grade-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .subject-name {
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+
+        .grade-badge {
+            background: var(--teal-soft);
+            color: var(--teal-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        .grade-badge.low {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--teal-main);
+            border-radius: 10px;
+        }
+
+        .grade-meta {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* شريط أيام الجدول الأسبوعي */
+        .days-strip {
+            display: flex;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 8px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            gap: 4px;
+        }
+
+        .day-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 4px;
+            border-radius: 12px;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            text-align: center;
+            color: var(--text-muted);
             transition: 0.2s;
         }
 
-        .btn-submit { background-color: var(--primary-color); color: white; }
-        .btn-submit:hover { background-color: var(--primary-hover); }
-        
-        .btn-print { background-color: var(--btn-secondary); color: white; }
-        .btn-print:hover { background-color: var(--btn-secondary-hover); }
-
-        /* استجابة الموبايل */
-        @media (max-width: 768px) {
-            .cols-5, .cols-3 { grid-template-columns: 1fr; }
-            .photo-upload-container { align-items: center; }
-            .form-card::before { width: 250px; height: 250px; } /* تصغير الشعار بالموبايل */
+        .day-btn strong {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 800;
         }
 
-        /* الطباعة */
-        @media print {
-            body { background: none; padding: 0; }
-            .form-card { box-shadow: none; border: 2px solid #000; padding: 20px; }
-            .actions-group, .file-btn { display: none; }
-            .form-control { border: 1px solid #000; appearance: none; -webkit-appearance: none; }
-            select.form-control { background-image: none; }
-            .form-card::before { opacity: 0.1; } /* إظهار الشعار بوضوح أكبر قليلاً عند الطباعة */
+        .day-btn.active {
+            background: var(--teal-main);
+            color: var(--white);
+            box-shadow: 0 3px 8px rgba(29, 138, 147, 0.25);
+        }
+
+        .lecture-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 10px;
+            border-right: 4px solid var(--teal-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .lecture-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+
+        .lecture-info p {
+            margin: 0;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .lecture-time {
+            background: var(--card-bg);
+            color: var(--teal-dark);
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        /* بطاقات التبليغات */
+        .notice-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid #e9eef0;
+            position: relative;
+        }
+
+        .notice-card.unread {
+            border-right: 4px solid var(--danger);
+        }
+
+        .notice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .notice-title {
+            font-weight: 800;
+            font-size: 0.92rem;
+            color: var(--text-dark);
+        }
+
+        .notice-date {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .notice-body {
+            margin: 0;
+            font-size: 0.83rem;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        /* شريط التنقل السفلي (بنفس فكرة الصورة) */
+        .bottom-nav-wrapper {
+            position: fixed;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 24px);
+            max-width: 436px;
+            z-index: 100;
+        }
+
+        .bottom-nav {
+            background: var(--white);
+            border-radius: 22px;
+            padding: 8px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #edf2f4;
+        }
+
+        .nav-item {
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 11px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.25s ease;
+        }
+
+        .nav-item svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .nav-item span {
+            display: none;
+            font-size: 0.78rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        /* التبويب النشط يتحول إلى كبسولة تركوازية */
+        .nav-item.active {
+            background-color: var(--teal-soft);
+            color: var(--teal-dark);
+            padding: 10px 14px;
+        }
+
+        .nav-item.active span {
+            display: inline-block;
         }
     </style>
 </head>
 <body>
 
-    <div class="form-card">
-        <h1 class="header-title">استمارة تسجيل البيانات</h1>
+<div class="app-shell">
 
-        <!-- مساحة الصورة -->
-        <div class="photo-upload-container">
-            <div class="photo-preview" id="previewBox">تحميل<br>الملف</div>
-            <label class="file-btn">
-                اختر ملف
-                <input type="file" accept="image/*" onchange="loadFile(event)">
-            </label>
+    <!-- الهيدر العلوي -->
+    <header class="top-header">
+        <div class="header-right">
+            <div class="app-logo-box">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+            </div>
+            <div>
+                <p class="greeting-small">أهلاً بك، جعفر الصادق</p>
+                <h1 class="greeting-title" id="headerPageTitle">معلوماتي الشخصية</h1>
+            </div>
         </div>
 
-        <form id="registrationForm" onsubmit="event.preventDefault(); alert('تم حفظ البيانات بنجاح، جاري فتح الطباعة...'); window.print();">
-            
-            <!-- الصف 1: الاسم خماسي -->
-            <div class="grid-row cols-5">
-                <div class="form-group"><label>الاسم الأول:</label><input type="text" class="form-control" required></div>
-                <div class="form-group"><label>الاسم الثاني:</label><input type="text" class="form-control" required></div>
-                <div class="form-group"><label>الاسم الثالث:</label><input type="text" class="form-control" required></div>
-                <div class="form-group"><label>الاسم الرابع:</label><input type="text" class="form-control"></div>
-                <div class="form-group"><label>اللقب:</label><input type="text" class="form-control"></div>
-            </div>
+        <!-- زر الجرس ينقلك مباشرة لصفحة التبليغات -->
+        <button class="bell-btn" onclick="openTab('notices', document.getElementById('nav-notices'), 'تبليغات الجامعة')">
+            <span class="bell-badge">3</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+        </button>
+    </header>
 
-            <!-- الصف 2 -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>اسم الأم الثلاثي:</label><input type="text" class="form-control"></div>
-                <div class="form-group"><label>المسقط (مكان الولادة):</label><input type="text" class="form-control"></div>
-                <div class="form-group">
-                    <label>الجنس:</label>
-                    <select class="form-control">
-                        <option>ذكر</option>
-                        <option>أنثى</option>
-                    </select>
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+
+        <!-- 1. صفحة المعلومات الشخصية -->
+        <section id="profile" class="tab-page active">
+            <div class="status-banner">
+                <div>
+                    <h4>العام الدراسي 2026 - 2027</h4>
+                    <p>الحالة الدراسية: مستمر بالدوام (الفصل الدراسي الأول)</p>
+                </div>
+                <div class="banner-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
                 </div>
             </div>
 
-            <!-- الصف 3 -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>تاريخ الميلاد:</label><input type="date" class="form-control"></div>
-                <div class="form-group"><label>رقم الهاتف:</label><input type="number" class="form-control"></div>
-                <div class="form-group"><label>رقم هاتف ولي الأمر:</label><input type="number" class="form-control"></div>
-            </div>
-
-            <!-- الصف 4 -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>البريد الإلكتروني:</label><input type="email" class="form-control"></div>
-                <div class="form-group"><label>محافظة السكن الحالي:</label><input type="text" class="form-control"></div>
-                <div class="form-group"><label>العنوان مع أقرب نقطة دالة:</label><input type="text" class="form-control"></div>
-            </div>
-
-            <!-- الصف 5 -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>رقم البطاقة الوطنية:</label><input type="text" class="form-control"></div>
-                <div class="form-group"><label>جهة اصدار البطاقة الوطنية:</label><input type="text" class="form-control"></div>
-                <div class="form-group"><label>تاريخ اصدار البطاقة الوطنية:</label><input type="date" class="form-control"></div>
-            </div>
-
-            <!-- الصف 6: تأييد السكن -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>رقم (عدد) تأييد السكن:</label><input type="text" class="form-control"></div>
-                <div class="form-group"><label>جهة إصدار تأييد السكن:</label><input type="text" class="form-control"></div>
-                <div class="form-group"><label>تاريخ إصدار تأييد السكن:</label><input type="date" class="form-control"></div>
-            </div>
-
-            <!-- الصف 7 -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>مكان عمل الاب:</label><input type="text" class="form-control"></div>
-                <div class="form-group">
-                    <label>فصيلة الدم:</label>
-                    <select class="form-control">
-                        <option>O+</option><option>O-</option><option>A+</option><option>A-</option>
-                        <option>B+</option><option>B-</option><option>AB+</option><option>AB-</option>
-                    </select>
+            <div class="quick-grid">
+                <div class="quick-box">
+                    <strong>6</strong>
+                    <span>المواد الدراسية</span>
                 </div>
-                <div class="form-group">
-                    <label>الفرع الاعدادي:</label>
-                    <select class="form-control">
-                        <option>علمي</option><option>أدبي</option><option>مهني</option><option>أخرى</option>
-                    </select>
+                <div class="quick-box">
+                    <strong>الأولى</strong>
+                    <span>المرحلة</span>
+                </div>
+                <div class="quick-box">
+                    <strong>صباحي</strong>
+                    <span>الدراسة</span>
                 </div>
             </div>
 
-            <!-- الصف 8 -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>اسم الاعدادية:</label><input type="text" class="form-control"></div>
-                <div class="form-group">
-                    <label>سنة التخرج من الاعدادية:</label>
-                    <select class="form-control">
-                        <option>2025-2026</option>
-                        <option>2024-2025</option>
-                        <option>2023-2024</option>
-                        <option>2022-2023</option>
-                        <option>2021-2022</option>
-                        <option>2020-2021</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>تخصص المعهد او المهني ان وجد:</label><input type="text" class="form-control"></div>
+            <div class="section-head">
+                <h3>البطاقة التعريفية للطالب</h3>
             </div>
-
-            <!-- الصف 9 -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>الرقم الامتحاني:</label><input type="number" class="form-control"></div>
-                <div class="form-group">
-                    <label>نوع الدراسة:</label>
-                    <select class="form-control">
-                        <option>دراسة صباحية</option><option>دراسة مسائية</option>
-                    </select>
+            <!-- عدّل معلوماتك الشخصية هنا -->
+            <div class="soft-card">
+                <div class="info-item">
+                    <span class="info-label">الاسم الكامل</span>
+                    <span class="info-val">جعفر الصادق محمد باقر</span>
                 </div>
-                <div class="form-group">
-                    <label>الدور:</label>
-                    <select class="form-control">
-                        <option>الدور الأول</option><option>الدور الثاني</option><option>الدور الثالث</option>
-                    </select>
+                <div class="info-item">
+                    <span class="info-label">الجامعة</span>
+                    <span class="info-val">جامعة كربلاء</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">الكلية</span>
+                    <span class="info-val">كلية الهندسة</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">القسم</span>
+                    <span class="info-val">الهندسة المدنية</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">الرقم الجامعي</span>
+                    <span class="info-val" style="font-family: monospace;">26140100037</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">السكن</span>
+                    <span class="info-val">كربلاء - حي الحسين</span>
                 </div>
             </div>
+        </section>
 
-            <!-- الصف 10 -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>المجموع قبل الاضافة:</label><input type="number" class="form-control"></div>
-                <div class="form-group"><label>عدد المواد:</label><input type="number" class="form-control"></div>
-                <div class="form-group"><label>المعدل قبل الاضافة:</label><input type="number" step="0.01" class="form-control"></div>
+        <!-- 2. صفحة درجات الكوز -->
+        <section id="quizzes" class="tab-page">
+            <div class="section-head">
+                <h3>درجات الامتحانات اليومية (الكوز)</h3>
+                <span class="section-tag">من 10 درجات</span>
             </div>
 
-            <!-- الصف 11 -->
-            <div class="grid-row cols-3">
-                <div class="form-group"><label>درجة اللغات الاخرى ان وجدت:</label><input type="number" class="form-control"></div>
-                <div class="form-group"><label>المعدل بعد الاضافة:</label><input type="number" step="0.01" class="form-control"></div>
-                <div class="form-group">
-                    <label>هل أنت من أبناء الأساتذة:</label>
-                    <select class="form-control">
-                        <option>كلا</option><option>نعم</option>
-                    </select>
+            <!-- عدّل درجات الكوز هنا -->
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الرياضيات الهندسية</span>
+                    <span class="grade-badge">9 / 10</span>
                 </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+                <div class="grade-meta"><span>كوز 1: 9/10</span><span>ممتاز</span></div>
             </div>
 
-            <!-- الصف 12: القسم وسنة القبول وقناة القبول -->
-            <div class="grid-row cols-3">
-                <div class="form-group">
-                    <label>القسم العلمي:</label>
-                    <select class="form-control">
-                        <option>الهندسة المدنية</option>
-                        <option>الهندسة الميكانيكية</option>
-                        <option>الهندسة الكهربائية</option>
-                        <option>هندسة الأطراف والمساند الصناعية</option>
-                        <option>هندسة الطب الحياتي</option>
-                        <option>هندسة العمارة</option>
-                        <option>هندسة النفط</option>
-                    </select>
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الميكانيك الهندسي</span>
+                    <span class="grade-badge">8.5 / 10</span>
                 </div>
-                <div class="form-group">
-                    <label>سنة القبول:</label>
-                    <select class="form-control">
-                        <option>2026-2027</option>
-                        <option>2025-2026</option>
-                        <option>2024-2025</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>قناة القبول:</label>
-                    <select class="form-control">
-                        <option>القبول المركزي</option><option>الموازي</option><option>المسائي</option><option>أخرى</option>
-                    </select>
-                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
+                <div class="grade-meta"><span>كوز 1: 8.5/10</span><span>جيد جداً</span></div>
             </div>
 
-            <!-- التعهدات -->
-            <div class="terms-box">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="c1" required>
-                    <label for="c1">أتعهد بصحة المعلومات وبخلافه أتحمل كافة التبعات الإدارية والقانونية.</label>
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الرسم الهندسي</span>
+                    <span class="grade-badge">10 / 10</span>
                 </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="c2" required>
-                    <label for="c2">أتعهد بتسليم جميع المستمسكات المطلوبة في التسجيل وبخلافه أتحمل كافة التبعات.</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="c3" required>
-                    <label for="c3">أتعهد بالالتزام بكافة التعليمات والضوابط الخاصة بإجراءات التسجيل.</label>
-                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+                <div class="grade-meta"><span>لوحة رقم 1 و 2</span><span>درجة كاملة</span></div>
             </div>
 
-            <!-- الأزرار -->
-            <div class="actions-group">
-                <button type="submit" class="btn btn-submit">تسجيل وطباعة</button>
-                <button type="button" class="btn btn-print" onclick="window.print()">طباعة</button>
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">مبادئ الحاسوب والبرمجة</span>
+                    <span class="grade-badge">9.5 / 10</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 95%;"></div></div>
+                <div class="grade-meta"><span>كوز عملي</span><span>ممتاز</span></div>
+            </div>
+        </section>
+
+        <!-- 3. صفحة درجات المد -->
+        <section id="midterms" class="tab-page">
+            <div class="section-head">
+                <h3>درجات امتحانات الفصل (المد)</h3>
+                <span class="section-tag">من 30 درجة</span>
             </div>
 
-        </form>
+            <!-- عدّل درجات المد هنا -->
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الرياضيات الهندسية</span>
+                    <span class="grade-badge">27 / 30</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+                <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: امتياز</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الميكانيك الهندسي</span>
+                    <span class="grade-badge">25 / 30</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 83%;"></div></div>
+                <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: جيد جداً</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الفيزياء الهندسية</span>
+                    <span class="grade-badge">24 / 30</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+                <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: جيد جداً</span></div>
+            </div>
+
+            <div class="grade-card">
+                <div class="grade-top">
+                    <span class="subject-name">الجيولوجيا الهندسية</span>
+                    <span class="grade-badge">28 / 30</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 93%;"></div></div>
+                <div class="grade-meta"><span>الحالة: ناجح</span><span>التقدير: امتياز</span></div>
+            </div>
+        </section>
+
+        <!-- 4. صفحة الجدول الأسبوعي -->
+        <section id="schedule" class="tab-page">
+            <div class="section-head">
+                <h3>جدول المحاضرات الأسبوعي</h3>
+                <span class="section-tag">اختر اليوم</span>
+            </div>
+
+            <div class="days-strip">
+                <button class="day-btn active" onclick="showDay('sun', this)"><strong>الأحد</strong></button>
+                <button class="day-btn" onclick="showDay('mon', this)"><strong>الاثنين</strong></button>
+                <button class="day-btn" onclick="showDay('tue', this)"><strong>الثلاثاء</strong></button>
+                <button class="day-btn" onclick="showDay('wed', this)"><strong>الأربعاء</strong></button>
+                <button class="day-btn" onclick="showDay('thu', this)"><strong>الخميس</strong></button>
+            </div>
+
+            <!-- هنا تتغير المحاضرات حسب اليوم المختار -->
+            <div id="scheduleList"></div>
+        </section>
+
+        <!-- 5. صفحة تبليغات الجامعة -->
+        <section id="notices" class="tab-page">
+            <div class="section-head">
+                <h3>تبليغات الجامعة والقسم</h3>
+                <span class="section-tag">3 تبليغات</span>
+            </div>
+
+            <!-- عدّل التبليغات هنا -->
+            <div class="notice-card unread">
+                <div class="notice-header">
+                    <span class="notice-title">موعد كوز الميكانيك الهندسي</span>
+                    <span class="notice-date">اليوم</span>
+                </div>
+                <p class="notice-body">على جميع طلبة المرحلة الأولى الاستعداد لامتحان الكوز الثاني يوم الثلاثاء القادم الساعة 10:00 صباحاً في قاعة 2.</p>
+            </div>
+
+            <div class="notice-card unread">
+                <div class="notice-header">
+                    <span class="notice-title">تسليم لوحات الرسم الهندسي</span>
+                    <span class="notice-date">أمس</span>
+                </div>
+                <p class="notice-body">آخر موعد لتسليم لوحة المساقط الثالثة هو يوم الخميس قبل الساعة 12 ظهراً، ولن يُقبل أي تأخير.</p>
+            </div>
+
+            <div class="notice-card">
+                <div class="notice-header">
+                    <span class="notice-title">تحديث جدول المختبرات</span>
+                    <span class="notice-date">منذ 3 أيام</span>
+                </div>
+                <p class="notice-body">تم نقل مختبر الحاسوب لمجموعة (A) إلى القاعة الجديدة في الطابق الثاني من بناية القسم.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- شريط التنقل السفلي (5 خيارات) -->
+    <div class="bottom-nav-wrapper">
+        <nav class="bottom-nav">
+            <!-- 1. معلومات شخصية -->
+            <button class="nav-item active" onclick="openTab('profile', this, 'معلوماتي الشخصية')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>معلوماتي</span>
+            </button>
+
+            <!-- 2. درجات الكوز -->
+            <button class="nav-item" onclick="openTab('quizzes', this, 'درجات الكوز')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 11l3 3L22 4"/>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+                <span>الكوز</span>
+            </button>
+
+            <!-- 3. درجات المد -->
+            <button class="nav-item" onclick="openTab('midterms', this, 'درجات المد')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                <span>المد</span>
+            </button>
+
+            <!-- 4. الجدول الأسبوعي -->
+            <button class="nav-item" onclick="openTab('schedule', this, 'الجدول الأسبوعي')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>الجدول</span>
+            </button>
+
+            <!-- 5. تبليغات الجامعة -->
+            <button class="nav-item" id="nav-notices" onclick="openTab('notices', this, 'تبليغات الجامعة')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 2L11 13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+                <span>التبليغات</span>
+            </button>
+        </nav>
     </div>
 
-    <script>
-        function loadFile(event) {
-            const preview = document.getElementById('previewBox');
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
-                }
-                reader.readAsDataURL(file);
-            }
+</div>
+
+<script>
+    // دالة التنقل بين الصفحات الـ 5
+    function openTab(tabId, btn, titleText) {
+        document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+        document.getElementById('headerPageTitle').textContent = titleText;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // بيانات الجدول الأسبوعي - عدّلها حسب جدولك الحقيقي
+    const weeklySchedule = {
+        sun: [
+            { subject: "الرياضيات الهندسية", details: "قاعة 1 • د. أحمد", time: "08:30 ص" },
+            { subject: "الميكانيك الهندسي", details: "قاعة 3 • د. علي", time: "10:30 ص" }
+        ],
+        mon: [
+            { subject: "الرسم الهندسي (عملي)", details: "مرسم 2 • م.م حسن", time: "08:30 ص" },
+            { subject: "مبادئ الحاسوب", details: "مختبر الحاسوب • م. زينب", time: "11:00 ص" }
+        ],
+        tue: [
+            { subject: "الفيزياء الهندسية", details: "قاعة 2 • د. كريم", time: "09:00 ص" },
+            { subject: "حقوق الإنسان", details: "قاعة 4 • د. محمد", time: "11:30 ص" }
+        ],
+        wed: [
+            { subject: "الجيولوجيا الهندسية", details: "قاعة 1 • د. سارة", time: "08:30 ص" },
+            { subject: "الرياضيات الهندسية", details: "قاعة 1 • د. أحمد", time: "10:30 ص" }
+        ],
+        thu: [
+            { subject: "الميكانيك الهندسي", details: "قاعة 3 • د. علي", time: "09:00 ص" },
+            { subject: "اللغة الإنكليزية", details: "قاعة 2 • أ. حسين", time: "11:00 ص" }
+        ]
+    };
+
+    function showDay(dayKey, btn) {
+        document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const list = document.getElementById('scheduleList');
+        const lectures = weeklySchedule[dayKey] || [];
+
+        if (lectures.length === 0) {
+            list.innerHTML = '<div class="soft-card" style="text-align:center; color:#64748b;">لا توجد محاضرات في هذا اليوم</div>';
+            return;
         }
-    </script>
+
+        list.innerHTML = lectures.map(item => `
+            <div class="lecture-card">
+                <div class="lecture-info">
+                    <h4>${item.subject}</h4>
+                    <p>${item.details}</p>
+                </div>
+                <div class="lecture-time">${item.time}</div>
+            </div>
+        `).join('');
+    }
+
+    // عرض جدول يوم الأحد افتراضياً عند فتح الموقع
+    showDay('sun', document.querySelector('.day-btn'));
+</script>
 
 </body>
 </html>
