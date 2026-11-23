@@ -360,11 +360,11 @@
             background: var(--white);
             border-radius: 14px;
             padding: 14px;
-            margin-bottom: 10px;
             border-right: 4px solid var(--teal-main);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.03);
         }
 
@@ -376,13 +376,44 @@
             color: var(--teal-dark);
             padding: 6px 10px;
             border-radius: 10px;
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 800;
             text-align: center;
             white-space: nowrap;
+            direction: ltr;
         }
 
-        /* تنسيق التبليغات التفاعلية (تفتح عند الضغط وتتحول لمقروءة) */
+        /* فاصل الريست بين المحاضرات */
+        .rest-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 6px 0;
+            position: relative;
+        }
+
+        .rest-divider::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            border-top: 1px dashed #cbd5e1;
+            z-index: 0;
+        }
+
+        .rest-pill {
+            position: relative;
+            z-index: 1;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* تنسيق التبليغات التفاعلية */
         .notice-card {
             background: var(--white);
             border-radius: 14px;
@@ -577,7 +608,7 @@
             <div class="quick-grid">
                 <div class="quick-box"><strong>9</strong><span>مواد الكورس الأول</span></div>
                 <div class="quick-box"><strong>الأولى</strong><span>المرحلة</span></div>
-                <div class="quick-box"><strong>صباحي</strong><span>الدراسة</span></div>
+                <div class="quick-box"><strong>01:30 م</strong><span>نهاية الدوام</span></div>
             </div>
 
             <div class="section-head"><h3>البطاقة التعريفية للطالب</h3></div>
@@ -592,7 +623,7 @@
             </div>
         </section>
 
-        <!-- 2. درجات الكوز (فارغة بدون درجات) -->
+        <!-- 2. درجات الكوز -->
         <section id="quizzes" class="tab-page">
             <div class="section-head">
                 <h3>درجات الكوز - الكورس الأول</h3>
@@ -681,7 +712,7 @@
             </div>
         </section>
 
-        <!-- 3. درجات المد (فارغة بدون درجات) -->
+        <!-- 3. درجات المد -->
         <section id="midterms" class="tab-page">
             <div class="section-head">
                 <h3>درجات المد - الكورس الأول</h3>
@@ -770,11 +801,11 @@
             </div>
         </section>
 
-        <!-- 4. الجدول الأسبوعي -->
+        <!-- 4. الجدول الأسبوعي (3 محاضرات + ريست 15 دقيقة + الخميس أوف) -->
         <section id="schedule" class="tab-page">
             <div class="section-head">
                 <h3>جدول الكورس الأول الأسبوعي</h3>
-                <span class="section-tag">الخميس أوف</span>
+                <span class="section-tag">08:30 ص - 01:30 م</span>
             </div>
 
             <div class="days-strip">
@@ -788,7 +819,7 @@
             <div id="scheduleList"></div>
         </section>
 
-        <!-- 5. تبليغات الجامعة (اضغط على العنوان لعرض التفاصيل وتحويله لمقروء) -->
+        <!-- 5. تبليغات الجامعة -->
         <section id="notices" class="tab-page">
             <div class="section-head">
                 <h3>تبليغات قسم الكهرباء والإلكترونيك</h3>
@@ -824,7 +855,7 @@
                         </svg>
                     </div>
                 </div>
-                <p class="notice-body">تقرر إجراء امتحان الكوز الأول لمادة الفيزياء الإلكترونية يوم الثلاثاء الساعة 10:30 صباحاً في القاعة الأولى.</p>
+                <p class="notice-body">تقرر إجراء امتحان الكوز الأول لمادة الفيزياء الإلكترونية يوم الثلاثاء الساعة 10:15 صباحاً في القاعة الأولى.</p>
             </div>
 
             <div class="notice-card unread" data-id="notice-3" onclick="toggleNotice(this)">
@@ -913,7 +944,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // إدارة الإشعارات (الفتح/الإغلاق وحفظ حالة المقروء)
+    // إدارة الإشعارات
     const STORAGE_KEY = 'read_notices_v1';
 
     function getReadNotices() {
@@ -971,28 +1002,35 @@
         updateUnreadCount();
     }
 
-    // جدول مواد الكورس الأول (الأحد - الأربعاء، والخميس أوف)
+    // جدول 3 محاضرات يومياً مع ريست 15 دقيقة بين كل محاضرة (08:30 ص - 01:30 م)
     const weeklySchedule = {
         sun: [
-            { subject: "أسس الهندسة الكهربائية I", details: "نظري • القاعة 1", time: "08:30 ص" },
-            { subject: "الرياضيات الهندسية I", details: "نظري • القاعة 1", time: "10:30 ص" },
-            { subject: "جرائم حزب البعث", details: "نظري • القاعة 4", time: "12:30 م" }
+            { subject: "أسس الهندسة الكهربائية I", details: "نظري • القاعة 1", time: "08:30 - 10:00" },
+            { subject: "الرياضيات الهندسية I", details: "نظري • القاعة 1", time: "10:15 - 11:45" },
+            { subject: "جرائم حزب البعث", details: "نظري • القاعة 4", time: "12:00 - 01:30" }
         ],
         mon: [
-            { subject: "مختبر أسس الكهرباء", details: "عملي • مختبر الدوائر", time: "08:30 ص" },
-            { subject: "الميكانيك الهندسي", details: "نظري • القاعة 2", time: "10:30 ص" }
+            { subject: "مختبر أسس الكهرباء", details: "عملي • مختبر الدوائر", time: "08:30 - 10:00" },
+            { subject: "الميكانيك الهندسي", details: "نظري • القاعة 2", time: "10:15 - 11:45" },
+            { subject: "التربية الإسلامية", details: "نظري • القاعة 3", time: "12:00 - 01:30" }
         ],
         tue: [
-            { subject: "الفيزياء الإلكترونية", details: "نظري • القاعة 1", time: "08:30 ص" },
-            { subject: "مبادئ الحاسوب والبرمجة", details: "عملي • مختبر الحاسوب", time: "10:30 ص" },
-            { subject: "التربية الإسلامية", details: "نظري • القاعة 3", time: "12:30 م" }
+            { subject: "الفيزياء الإلكترونية", details: "نظري • القاعة 1", time: "08:30 - 10:00" },
+            { subject: "مبادئ الحاسوب والبرمجة", details: "عملي • مختبر الحاسوب", time: "10:15 - 11:45" },
+            { subject: "تطبيقات الرياضيات (Tutorial)", details: "عملي • القاعة 1", time: "12:00 - 01:30" }
         ],
         wed: [
-            { subject: "الرسم الهندسي", details: "عملي • المرسم الهندسي", time: "08:30 ص" },
-            { subject: "اللغة الإنكليزية", details: "نظري • القاعة 3", time: "11:30 ص" }
+            { subject: "الرسم الهندسي", details: "عملي • المرسم الهندسي", time: "08:30 - 10:00" },
+            { subject: "اللغة الإنكليزية", details: "نظري • القاعة 3", time: "10:15 - 11:45" },
+            { subject: "مختبر الفيزياء الإلكترونية", details: "عملي • مختبر الفيزياء", time: "12:00 - 01:30" }
         ],
-        thu: []
+        thu: [] // الخميس أوف
     };
+
+    const restSlots = [
+        "ريست 15 دقيقة (10:00 - 10:15)",
+        "ريست 15 دقيقة (11:45 - 12:00)"
+    ];
 
     function showDay(dayKey, btn) {
         document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -1011,15 +1049,21 @@
             return;
         }
 
-        list.innerHTML = lectures.map(item => `
-            <div class="lecture-card">
-                <div class="lecture-info">
-                    <h4>${item.subject}</h4>
-                    <p>${item.details}</p>
+        list.innerHTML = lectures.map((item, idx) => {
+            const cardHtml = `
+                <div class="lecture-card">
+                    <div class="lecture-info">
+                        <h4>${item.subject}</h4>
+                        <p>${item.details}</p>
+                    </div>
+                    <div class="lecture-time">${item.time}</div>
                 </div>
-                <div class="lecture-time">${item.time}</div>
-            </div>
-        `).join('');
+            `;
+            const restHtml = (idx < lectures.length - 1 && restSlots[idx])
+                ? `<div class="rest-divider"><span class="rest-pill">${restSlots[idx]}</span></div>`
+                : '';
+            return cardHtml + restHtml;
+        }).join('');
     }
 
     initNotices();
